@@ -1,7 +1,6 @@
 import bottle
 import os
 import random
-import pprint
 
 directions = ['up', 'down', 'left', 'right']
 
@@ -43,6 +42,8 @@ def move():
     global directions
     data = bottle.request.json
 
+    print(data)
+
     snakes = data['snakes']
     height = data['height']
     width = data['width']
@@ -62,8 +63,7 @@ def move():
 def donthitneck(me):
     """Stops the snake from hitting its own neck"""
     global directions
-    pp = pprint.PrettyPrinter(indent=4)
-    pp.pprint(me)
+    print(me)
     head = me[0]
     neck = me[1]
     neckdir = findadjacentdir(head, neck)
