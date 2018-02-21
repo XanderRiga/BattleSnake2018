@@ -49,7 +49,10 @@ def move():
     width = data['width']
     food = data['food']
 
-    me = data['you']
+    for y in snakes:
+        if y['id'] == data['you']:
+            me = y
+
     donthitneck(me)
 
     direction = random.choice(directions)
@@ -64,8 +67,8 @@ def donthitneck(me):
     """Stops the snake from hitting its own neck"""
     global directions
     print(me)
-    head = me[0]
-    neck = me[1]
+    head = me['body'][0]
+    neck = me['body'][1]
     neckdir = findadjacentdir(head, neck)
 
 
