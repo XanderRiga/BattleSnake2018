@@ -70,11 +70,32 @@ def donthitneck(me):
     head = me['coords'][0]
     neck = me['coords'][1]
     neckdir = findadjacentdir(head, neck)
+    directions.remove(neckdir)
 
 
 def findadjacentdir(a, b):
-    print(a)
-    print(b)
+    """Gives direction from a to b if they are adjacent, if they are not adjacent returns false"""
+    ax = a[0]
+    ay = a[1]
+    bx = b[0]
+    by = b[1]
+    xdiff = ax - bx
+    ydiff = ay - by
+
+    if (xdiff in range(-1, 2) and ydiff == 0) or (ydiff in range(-1, 2) and xdiff == 0):
+        if xdiff != 0:
+            if xdiff > 0:
+                return 'left'
+            else:
+                return 'right'
+        if ydiff != 0:
+            if ydiff > 0:
+                return 'up'
+            else:
+                return 'down'
+        print('first few game moves')
+    else:
+        return False
 
 
 # Expose WSGI app (so gunicorn can find it)
