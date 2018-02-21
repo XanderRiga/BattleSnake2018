@@ -70,7 +70,9 @@ def donthitneck(me):
     head = me['coords'][0]
     neck = me['coords'][1]
     neckdir = findadjacentdir(head, neck)
-    directions.remove(neckdir)
+    print('neck direction: ' + neckdir)
+    if neckdir:
+        directions.remove(neckdir)
 
 
 def findadjacentdir(a, b):
