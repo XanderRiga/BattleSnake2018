@@ -67,8 +67,8 @@ def donthitneck(me):
     """Stops the snake from hitting its own neck"""
     global directions
     print(me)
-    head = me['body'][0]
-    neck = me['body'][1]
+    head = me['coords'][0]
+    neck = me['coords'][1]
     neckdir = findadjacentdir(head, neck)
 
 
