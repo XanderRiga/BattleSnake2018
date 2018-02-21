@@ -40,8 +40,13 @@ def start():
 def move():
     data = bottle.request.json
 
-    # TODO: Do things with data
-    
+    print(data)
+
+    snakes = data('snakes')
+    height = data('height')
+    width = data('width')
+    food = data('food')
+
     directions = ['up', 'down', 'left', 'right']
     direction = random.choice(directions)
     print(direction)
