@@ -40,6 +40,7 @@ def start():
 @bottle.post('/move')
 def move():
     global directions
+    directions = ['up', 'down', 'left', 'right']
     data = bottle.request.json
 
     print(data)
@@ -70,8 +71,8 @@ def donthitneck(me):
     head = me['coords'][0]
     neck = me['coords'][1]
     neckdir = findadjacentdir(head, neck)
-    print('neck direction: ' + neckdir)
-    if neckdir:
+    print('neck direction: ' + str(neckdir))
+    if neckdir and neckdir in directions:
         directions.remove(neckdir)
 
 
