@@ -42,12 +42,12 @@ def move():
     global directions
     data = bottle.request.json
 
-    snakes = data('snakes')
-    height = data('height')
-    width = data('width')
-    food = data('food')
+    snakes = data['snakes']
+    height = data['height']
+    width = data['width']
+    food = data['food']
 
-    me = data('you')
+    me = data['you']
     donthitneck(me)
 
     direction = random.choice(directions)
