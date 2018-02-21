@@ -2,6 +2,7 @@ import bottle
 import os
 import random
 
+directions = ['up', 'down', 'left', 'right']
 
 
 @bottle.route('/')
@@ -38,22 +39,37 @@ def start():
 
 @bottle.post('/move')
 def move():
+    global directions
     data = bottle.request.json
-
-    print(data)
 
     snakes = data('snakes')
     height = data('height')
     width = data('width')
     food = data('food')
 
-    directions = ['up', 'down', 'left', 'right']
+    me = data('you')
+    donthitneck(me)
+
     direction = random.choice(directions)
     print(direction)
     return {
         'move': direction,
         'taunt': 'battlesnake-python!'
     }
+
+
+def donthitneck(me):
+    """Stops the snake from hitting its own neck"""
+    global directions
+    print(me)
+    head = me[0]
+    neck = me[0]
+    neckdir = findadjacentdir(head, neck)
+
+
+def findadjacentdir(a, b):
+    print(a)
+    print(b)
 
 
 # Expose WSGI app (so gunicorn can find it)
