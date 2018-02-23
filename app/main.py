@@ -34,6 +34,7 @@ def start():
         'taunt': '{} ({}x{})'.format(game_id, board_width, board_height),
         'head_url': head_url,
         'name': 'Dwight Snake',
+        'taunt': 'Bears, Beets, Battlestar Galactica',
         'head_type': 'safe',
         'tail_type': 'round-bum'
     }
@@ -54,7 +55,8 @@ def move():
 
     donthitneck(me)
     donthitwalls(me, width, height)
-    donthittail(me)
+    # donthittail(me)
+    donthitsnakes(me[0], snakes)
 
     direction = random.choice(directions)
     print(direction)
@@ -63,15 +65,25 @@ def move():
         'taunt': 'battlesnake-python!'
     }
 
-def donthittail(me):
+def donthitsnakes(head, snakes):
     global directions
-    head = me[0]
 
-    for x in me:
-        adj = findadjacentdir(head, x)
-        if adj and adj in directions:
-            print('removing ' + adj)
-            directions.remove(adj)
+    for snake in snakes:
+        for bodypart in snake:
+            adj = findadjacentdir(head, bodypart)
+            if adj and adj in directions:
+                print('snake in ' + adj + ' direction')
+                directions.remove(adj)
+
+# def donthittail(me):
+#     global directions
+#     head = me[0]
+#
+#     for x in me:
+#         adj = findadjacentdir(head, x)
+#         if adj and adj in directions:
+#             print('removing ' + adj)
+#             directions.remove(adj)
 
 def donthitwalls(me, width, height):
     """Stops the snake from hitting any walls"""
