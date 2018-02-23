@@ -203,7 +203,7 @@ def isadjacentdiagonal(a, b):
     xdiff = ax - bx
     ydiff = ay - by
 
-    if xdiff in range(-1, 2) or ydiff in range(-1, 2):
+    if xdiff in range(-1, 1) or ydiff in range(-1, 1):
         return True
     else:
         return False
