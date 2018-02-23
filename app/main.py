@@ -61,10 +61,11 @@ def move():
     print(direction)
     return {
         'move': direction,
-        'taunt': 'battlesnake-python!'
+        'taunt': 'Bears, Beets, Battlestar Galactica'
     }
 
 def donthitsnakes(head, snakes):
+    """goes through entire snake array and stops it from directly hitting other snakes"""
     global directions
 
     for snake in snakes['data']:
