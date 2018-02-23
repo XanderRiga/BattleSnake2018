@@ -82,6 +82,11 @@ def move():
         if not down and 'down' in directions:
             directions.remove('down')
 
+        print('left: ' + str(left))
+        print('right: ' + str(right))
+        print('up: ' + str(up))
+        print('down: ' + str(down))
+
     if directions:
         direction = random.choice(directions)
     else:
@@ -143,22 +148,26 @@ def donthitwalls(me, width, height):
 # TODO Check if there is food in the area, could make the snake longer and make you not fit
 def checkenclosed(point, me, snakes, width, height, snakelength):
     """Returns true if the snake can fit in the space along an edge"""
-    global directions
+    dirarray = ['up', 'down', 'left', 'right']
+
+    dirarray = getlegalmoves(dirarray, me[0], me, snakes, width, height)
+    print('Legal Moves:')
+    print(dirarray)
 
     if snakelength > 0:
-        if 'left' in directions:
+        if 'left' in dirarray:
             left = getleft(point)
             if adjacenttodanger(left, me, snakes, width, height):
                 checkenclosed(left, me, snakes, width, height, snakelength-1)
-        if 'right' in directions:
+        if 'right' in dirarray:
             right = getright(point)
             if adjacenttodanger(right, me, snakes, width, height):
                 checkenclosed(right, me, snakes, width, height, snakelength-1)
-        if 'up' in directions:
+        if 'up' in dirarray:
             up = getup(point)
             if adjacenttodanger(up, me, snakes, width, height):
                 checkenclosed(up, me, snakes, width, height, snakelength-1)
-        if 'down' in directions:
+        if 'down' in dirarray:
             down = getdown(point)
             if adjacenttodanger(down, me, snakes, width, height):
                 checkenclosed(down, me, snakes, width, height, snakelength-1)
@@ -168,8 +177,30 @@ def checkenclosed(point, me, snakes, width, height, snakelength):
     return False
 
 
+def getlegalmoves(dirarray, head, me, snakes, width, height):
+    # Don't hit other snakes
+    for snake in snakes['data']:
+        for bodypart in snake['body']['data']:
+            adj = findadjacentdir(head, bodypart)
+            if adj and adj in directions:
+                dirarray.remove(adj)
 
+    # Don't hit own tail
+    for x in me:
+        adj = findadjacentdir(head, x)
+        if adj and adj in directions:
+            dirarray.remove(adj)
 
+    if head['x'] == 0:
+        dirarray.remove('left')
+    if head['x'] == width-1:
+        dirarray.remove('right')
+    if head['y'] == 0:
+        dirarray.remove('up')
+    if head['y'] == height-1:
+        dirarray.remove('down')
+
+    return dirarray
 
 
 def adjacenttodanger(point, me, snakes, width, height):
@@ -264,17 +295,21 @@ def isadjacentdiagonal(a, b):
     else:
         return False
 
+
 def getleft(point):
     point['x'] -= 1
     return point
+
 
 def getright(point):
     point['x'] += 1
     return point
 
+
 def getup(point):
     point['y'] -= 1
     return point
+
 
 def getdown(point):
     point['y'] += 1
