@@ -203,7 +203,7 @@ def isadjacentdiagonal(a, b):
     xdiff = ax - bx
     ydiff = ay - by
 
-    if xdiff in range(-1, 1) or ydiff in range(-1, 1):
+    if xdiff in range(-1, 1) and ydiff in range(-1, 1):
         print('Points were marked adjacent:')
         print(a)
         print(b)
