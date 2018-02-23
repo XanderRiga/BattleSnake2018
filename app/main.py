@@ -130,11 +130,10 @@ def istouchingsnake(point, me, snakes):
     """checks if the point is touching a snake, not including this snakes head or neck"""
     head = me[0]
     neck = me[1]
-    neck2 = me[2]
 
     for snake in snakes['data']:
         for bodypart in snake['body']['data']:
-            if bodypart != head and bodypart != neck and bodypart != neck2:
+            if bodypart != head and bodypart != neck:
                 adj = isadjacentdiagonal(point, bodypart)
                 if adj:
                     print('Adjacent Points:')
