@@ -43,21 +43,15 @@ def move():
     directions = ['up', 'down', 'left', 'right']
     data = bottle.request.json
 
-    print(data)
-
     snakes = data['snakes']
     height = data['height']
     width = data['width']
     food = data['food']
 
-    # for y in snakes:
-    #     if y['id'] == data['you']:
-    #         me = y
+    me = data['you']['body']['data']
 
-    me = data['you']['body']
-
-    print(me)
     donthitneck(me)
+    donthitwalls(me, width, height)
 
     direction = random.choice(directions)
     print(direction)
@@ -67,12 +61,28 @@ def move():
     }
 
 
+def donthitwalls(me, width, height):
+    global directions
+    head = me[0]
+
+    if head['x'] == 0:
+        directions.remove('left')
+        print('wall on left')
+    if head['x'] == width-1:
+        directions.remove('right')
+        print('wall on right')
+    if head['y'] == 0:
+        directions.remove('up')
+        print('wall up')
+    if head['y'] == height-1:
+        directions.remove('down')
+        print('wall down')
+
 def donthitneck(me):
     """Stops the snake from hitting its own neck"""
     global directions
-    print(me)
-    head = me['data'][0]
-    neck = me['data'][1]
+    head = me[0]
+    neck = me[1]
     neckdir = findadjacentdir(head, neck)
     print('neck direction: ' + str(neckdir))
     if neckdir and neckdir in directions:
