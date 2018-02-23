@@ -57,10 +57,13 @@ def move():
     donthitwalls(me, width, height)
     donthittail(me)
 
+    if adjacenttodanger(me[0], me, snakes, width, height):
+        print('danger zone')
+
     if directions:
         direction = random.choice(directions)
     else:
-        print('Goodby cruel world')
+        print('Goodbye cruel world')
         taunt = 'MICHAEL!!!!!!'
         direction = 'up'
 
@@ -69,6 +72,16 @@ def move():
         'move': direction,
         'taunt': taunt
     }
+
+
+def adjacenttodanger(point, me, snakes, width, height):
+    """Checks if a point is adjacent to other snakes, edge of the board or the tail of my snake(not the head or neck)"""
+    if istouchingwall(point, width, height):
+        return True
+    if istouchingsnake(point, snakes):
+        return True
+    if istouchingself(point, me):
+        return True
 
 
 def donthitsnakes(head, snakes):
@@ -105,6 +118,47 @@ def donthitwalls(me, width, height):
         directions.remove('up')
     if head['y'] == height-1:
         directions.remove('down')
+
+#
+#
+# Below here are utility functions
+#
+#
+
+
+def istouchingself(point, me):
+    """checks if a point is touching this snake, not including head or neck"""
+    self = me[2:]
+
+    for x in self:
+        adj = findadjacentdir(point, x)
+        if adj:
+            return True
+
+    return False
+
+
+def istouchingsnake(point, snakes):
+    for snake in snakes['data']:
+        for bodypart in snake['body']['data']:
+            adj = findadjacentdir(point, bodypart)
+            if adj:
+                return True
+
+    return False
+
+
+def istouchingwall(point, width, height):
+    if point['x'] == 0:
+        return True
+    if point['x'] == width - 1:
+        return True
+    if point['y'] == 0:
+        return True
+    if point['y'] == height - 1:
+        return True
+
+    return False
 
 
 def findadjacentdir(a, b):
