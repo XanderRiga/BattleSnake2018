@@ -53,7 +53,7 @@ def move():
 
     me = data['you']['body']['data']
 
-    donthitneck(me)
+    #donthitneck(me)
     donthitwalls(me, width, height)
     donthittail(me)
     donthitsnakes(me[0], snakes)
