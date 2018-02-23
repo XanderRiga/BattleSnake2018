@@ -43,6 +43,7 @@ def start():
 def move():
     global directions
     directions = ['up', 'down', 'left', 'right']
+    taunt = 'Bears, Beets, Battlestar Galactica'
     data = bottle.request.json
 
     snakes = data['snakes']
@@ -57,11 +58,17 @@ def move():
     donthittail(me)
     donthitsnakes(me[0], snakes)
 
-    direction = random.choice(directions)
+    if directions:
+        direction = random.choice(directions)
+    else:
+        print('Goodby cruel world')
+        taunt = 'MICHAEL!!!!!!'
+        direction = 'up'
+
     print(direction)
     return {
         'move': direction,
-        'taunt': 'Bears, Beets, Battlestar Galactica'
+        'taunt': taunt
     }
 
 def donthitsnakes(head, snakes):
