@@ -128,12 +128,13 @@ def donthitwalls(me, width, height):
 
 def istouchingsnake(point, me, snakes):
     """checks if the point is touching a snake, not including this snakes head or neck"""
-    head = me[0]
-    neck = me[1]
+    # head = me[0]
+    # neck = me[1]
+    ignore = [me[0], me[1], me[2]]
 
     for snake in snakes['data']:
         for bodypart in snake['body']['data']:
-            if bodypart != head and bodypart != neck:
+            if bodypart not in ignore:
                 adj = isadjacentdiagonal(point, bodypart)
                 if adj:
                     print('Adjacent Points:')
