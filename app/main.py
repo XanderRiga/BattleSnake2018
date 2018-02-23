@@ -74,6 +74,7 @@ def move():
     }
 
 
+# TODO This is still picking up non dangerous things as danger, and the diagonal stuff isn't working
 def adjacenttodanger(point, me, snakes, width, height):
     """Checks if point is adjacent to snakes, edge of board, or itself(not neck/head) including diagonally"""
     if istouchingwall(point, width, height):
@@ -85,7 +86,7 @@ def adjacenttodanger(point, me, snakes, width, height):
 
 
 def donthitsnakes(head, snakes):
-    """goes through entire snake array and stops it from directly hitting other snakes"""
+    """goes through entire snake array and stops it from directly hitting any snakes"""
     global directions
 
     for snake in snakes['data']:
@@ -96,6 +97,7 @@ def donthitsnakes(head, snakes):
 
 
 def donthittail(me):
+    """Stops the snake from hitting it's own tail(anything past its head and neck)"""
     global directions
     head = me[0]
 
@@ -145,6 +147,7 @@ def istouchingsnake(point, me, snakes):
 
 
 def istouchingwall(point, width, height):
+    """returns true if the point is adjacent to a wall"""
     if point['x'] == 0:
         return True
     if point['x'] == width - 1:
