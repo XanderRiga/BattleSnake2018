@@ -52,6 +52,7 @@ def move():
 
     donthitneck(me)
     donthitwalls(me, width, height)
+    donthittail(me)
 
     direction = random.choice(directions)
     print(direction)
@@ -60,8 +61,18 @@ def move():
         'taunt': 'battlesnake-python!'
     }
 
+def donthittail(me):
+    global directions
+    head = me[0]
+
+    for x in me:
+        adj = findadjacentdir(head, x)
+        if adj:
+            print('removing ' + adj)
+            directions.remove(adj)
 
 def donthitwalls(me, width, height):
+    """Stops the snake from hitting any walls"""
     global directions
     head = me[0]
 
@@ -109,7 +120,6 @@ def findadjacentdir(a, b):
                 return 'up'
             else:
                 return 'down'
-        print('first few game moves')
     else:
         return False
 
