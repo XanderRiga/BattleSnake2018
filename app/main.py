@@ -34,8 +34,8 @@ def start():
         'taunt': '{} ({}x{})'.format(game_id, board_width, board_height),
         'head_url': head_url,
         'name': 'Dwight Snake',
-        'head_type': 'shades',#safe
-        'tail_type': 'skinny'
+        'head_type': 'smile',#safe
+        'tail_type': 'small-rattle'
     }
 
 
