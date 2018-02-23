@@ -77,10 +77,13 @@ def move():
 def adjacenttodanger(point, me, snakes, width, height):
     """Checks if a point is adjacent to other snakes, edge of the board or the tail of my snake(not the head or neck)"""
     if istouchingwall(point, width, height):
+        print('touching wall')
         return True
     if istouchingsnake(point, snakes):
+        print('touching snake')
         return True
     if istouchingself(point, me):
+        print('touching self')
         return True
 
 
