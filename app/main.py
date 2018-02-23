@@ -75,16 +75,13 @@ def move():
 
 
 def adjacenttodanger(point, me, snakes, width, height):
-    """Checks if a point is adjacent to other snakes, edge of the board or the tail of my snake(not the head or neck)"""
+    """Checks if point is adjacent to snakes, edge of board, or itself(not neck/head) including diagonally"""
     if istouchingwall(point, width, height):
         print('touching wall')
         return True
-    if istouchingothersnake(point, me, snakes):
+    if istouchingsnake(point, me, snakes):
         print('touching snake')
         return True
-    # if istouchingself(point, me):
-    #     print('touching self')
-    #     return True
 
 
 def donthitsnakes(head, snakes):
@@ -129,29 +126,17 @@ def donthitwalls(me, width, height):
 #
 
 
-# def istouchingself(point, me):
-#     """checks if a point is touching this snake, not including head or neck"""
-#     self = me[2:]
-#
-#     for x in self:
-#         adj = findadjacentdir(point, x)
-#         if adj:
-#             return True
-#
-#     return False
-
-
-def istouchingothersnake(point, me, snakes):
-    """checks if the point is touching another snake, not including this snakes head or neck"""
+def istouchingsnake(point, me, snakes):
+    """checks if the point is touching a snake, not including this snakes head or neck"""
     head = me[0]
     neck = me[1]
 
     for snake in snakes['data']:
         for bodypart in snake['body']['data']:
             if bodypart != head and bodypart != neck:
-                adj = findadjacentdir(point, bodypart)
+                adj = isadjacentdiagonal(point, bodypart)
                 if adj:
-                    print('Adjacent Points')
+                    print('Adjacent Points:')
                     print(point)
                     print(bodypart)
                     return True
@@ -173,7 +158,7 @@ def istouchingwall(point, width, height):
 
 
 def findadjacentdir(a, b):
-    """Gives direction from a to b if they are adjacent, if they are not adjacent returns false"""
+    """Gives direction from a to b if they are adjacent(not diagonal), if they are not adjacent returns false"""
     ax = a['x']
     ay = a['y']
     bx = b['x']
@@ -192,6 +177,21 @@ def findadjacentdir(a, b):
                 return 'up'
             else:
                 return 'down'
+    else:
+        return False
+
+
+def isadjacentdiagonal(a, b):
+    """Returns true if a is adjacent to be(with diagonal), if they are not adjacent returns false"""
+    ax = a['x']
+    ay = a['y']
+    bx = b['x']
+    by = b['y']
+    xdiff = ax - bx
+    ydiff = ay - by
+
+    if xdiff in range(-1, 2) or ydiff in range(-1, 2):
+        return True
     else:
         return False
 
