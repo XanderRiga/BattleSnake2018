@@ -129,19 +129,20 @@ def donthitwalls(me, width, height):
 #
 
 
-def istouchingself(point, me):
-    """checks if a point is touching this snake, not including head or neck"""
-    self = me[2:]
-
-    for x in self:
-        adj = findadjacentdir(point, x)
-        if adj:
-            return True
-
-    return False
+# def istouchingself(point, me):
+#     """checks if a point is touching this snake, not including head or neck"""
+#     self = me[2:]
+#
+#     for x in self:
+#         adj = findadjacentdir(point, x)
+#         if adj:
+#             return True
+#
+#     return False
 
 
 def istouchingothersnake(point, me, snakes):
+    """checks if the point is touching another snake, not including this snakes head or neck"""
     head = me[0]
     neck = me[1]
 
