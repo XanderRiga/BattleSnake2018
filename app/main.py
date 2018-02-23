@@ -56,7 +56,28 @@ def move():
     donthittail(me)
 
     if adjacenttodanger(me[0], me, snakes, width, height):
+        # Need to do something here to handle the not going inside on itself
         print('danger zone')
+        left, right, up, down = True
+
+        for x in directions:
+            if x == 'left':
+                left = checkenclosed(getleft(me[0]), me, snakes, width, height, len(me))
+            if x == 'right':
+                right = checkenclosed(getright(me[0]), me, snakes, width, height, len(me))
+            if x == 'up':
+                up = checkenclosed(getup(me[0]), me, snakes, width, height, len(me))
+            if x == 'right':
+                down = checkenclosed(getdown(me[0]), me, snakes, width, height, len(me))
+
+        if not left and 'left' in directions:
+            directions.remove('left')
+        if not right and 'right' in directions:
+            directions.remove('right')
+        if not up and 'up' in directions:
+            directions.remove('up')
+        if not down and 'down' in directions:
+            directions.remove('down')
 
     if directions:
         direction = random.choice(directions)
@@ -70,20 +91,6 @@ def move():
         'move': direction,
         'taunt': taunt
     }
-
-
-# TODO This is still picking up non dangerous things as danger, and the diagonal stuff isn't working
-def adjacenttodanger(point, me, snakes, width, height):
-    """Checks if point is adjacent to snakes, edge of board, or itself(not neck/head) including diagonally"""
-    if istouchingwall(point, width, height):
-        print('touching wall')
-        return True
-    if istouchingsnake(point, me, snakes):
-        print('touching snake')
-        return True
-    if istouchingself(point, me):
-        print('touching self')
-        return True
 
 
 def donthitsnakes(head, snakes):
@@ -122,11 +129,57 @@ def donthitwalls(me, width, height):
     if head['y'] == height-1:
         directions.remove('down')
 
+
 #
 #
 # Below here are utility functions
 #
 #
+
+
+# TODO Check if there is food in the area, could make the snake longer and make you not fit
+def checkenclosed(point, me, snakes, width, height, snakelength):
+    """Returns true if the snake can fit in the space along an edge"""
+    global directions
+
+    if snakelength > 0:
+        if 'left' in directions:
+            left = getleft(point)
+            if adjacenttodanger(left, me, snakes, width, height):
+                checkenclosed(left, me, snakes, width, height, snakelength-1)
+        if 'right' in directions:
+            right = getright(point)
+            if adjacenttodanger(right, me, snakes, width, height):
+                checkenclosed(right, me, snakes, width, height, snakelength-1)
+        if 'up' in directions:
+            up = getup(point)
+            if adjacenttodanger(up, me, snakes, width, height):
+                checkenclosed(up, me, snakes, width, height, snakelength-1)
+        if 'down' in directions:
+            down = getdown(point)
+            if adjacenttodanger(down, me, snakes, width, height):
+                checkenclosed(down, me, snakes, width, height, snakelength-1)
+    else:
+        return True
+
+    return False
+
+
+
+
+
+
+def adjacenttodanger(point, me, snakes, width, height):
+    """Checks if point is adjacent to snakes, edge of board, or itself(not neck/head) including diagonally"""
+    if istouchingwall(point, width, height):
+        print('touching wall')
+        return True
+    if istouchingsnake(point, me, snakes):
+        print('touching snake')
+        return True
+    if istouchingself(point, me):
+        print('touching self')
+        return True
 
 
 def istouchingsnake(point, me, snakes):
@@ -208,6 +261,21 @@ def isadjacentdiagonal(a, b):
     else:
         return False
 
+def getleft(point):
+    point['x'] -= 1
+    return point
+
+def getright(point):
+    point['x'] += 1
+    return point
+
+def getup(point):
+    point['y'] -= 1
+    return point
+
+def getdown(point):
+    point['y'] += 1
+    return point
 
 # Expose WSGI app (so gunicorn can find it)
 application = bottle.default_app()
