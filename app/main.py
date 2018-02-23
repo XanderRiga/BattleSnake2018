@@ -49,13 +49,13 @@ def move():
     snakes = data['snakes']
     height = data['height']
     width = data['width']
-    food = data['food']
+    # food = data['food']
 
     me = data['you']['body']['data']
 
+    donthitsnakes(me[0], snakes)
     donthitwalls(me, width, height)
     donthittail(me)
-    donthitsnakes(me[0], snakes)
 
     if directions:
         direction = random.choice(directions)
@@ -64,7 +64,7 @@ def move():
         taunt = 'MICHAEL!!!!!!'
         direction = 'up'
 
-    #print(direction)
+    # print(direction)
     return {
         'move': direction,
         'taunt': taunt
