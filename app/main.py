@@ -146,6 +146,9 @@ def istouchingsnake(point, snakes):
         for bodypart in snake['body']['data']:
             adj = findadjacentdir(point, bodypart)
             if adj:
+                print('Adjacent Points')
+                print(point)
+                print(bodypart)
                 return True
 
     return False
