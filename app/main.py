@@ -33,9 +33,9 @@ def start():
         'color': '#ffcc00',
         'taunt': '{} ({}x{})'.format(game_id, board_width, board_height),
         'head_url': head_url,
-        'name': 'battlesnake-python',
-        'head_type': 'sand-worm',#safe
-        'tail_type': 'round-bum'
+        'name': 'Dwight Snake',
+        'head_type': 'shades',#safe
+        'tail_type': 'skinny'
     }
 
 
