@@ -50,9 +50,11 @@ def move():
     width = data['width']
     food = data['food']
 
-    for y in snakes:
-        if y['id'] == data['you']:
-            me = y
+    # for y in snakes:
+    #     if y['id'] == data['you']:
+    #         me = y
+
+    me = data['you']
 
     donthitneck(me)
 
@@ -68,8 +70,8 @@ def donthitneck(me):
     """Stops the snake from hitting its own neck"""
     global directions
     print(me)
-    head = me['coords'][0]
-    neck = me['coords'][1]
+    head = me['body'][0]
+    neck = me['body'][1]
     neckdir = findadjacentdir(head, neck)
     print('neck direction: ' + str(neckdir))
     if neckdir and neckdir in directions:
@@ -107,5 +109,5 @@ application = bottle.default_app()
 if __name__ == '__main__':
     bottle.run(
         application,
-        host=os.getenv('IP', '0.0.0.0'),
+        host=os.getenv('IP', '127.0.0.1'),
         port=os.getenv('PORT', '8080'))
