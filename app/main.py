@@ -31,7 +31,6 @@ def start():
 
     return {
         'color': '#ffcc00',
-        'taunt': '{} ({}x{})'.format(game_id, board_width, board_height),
         'head_url': head_url,
         'name': 'Dwight Snake',
         'taunt': 'Bears, Beets, Battlestar Galactica',
@@ -69,11 +68,12 @@ def donthitsnakes(head, snakes):
     global directions
 
     for snake in snakes:
-        for bodypart in snake['body']:
-            adj = findadjacentdir(head, bodypart)
-            if adj and adj in directions:
-                print('snake in ' + adj + ' direction')
-                directions.remove(adj)
+        print(snake)
+        # for bodypart in snake['body']:
+        #     adj = findadjacentdir(head, bodypart)
+        #     if adj and adj in directions:
+        #         print('snake in ' + adj + ' direction')
+        #         directions.remove(adj)
 
 # def donthittail(me):
 #     global directions
