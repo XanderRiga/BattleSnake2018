@@ -82,9 +82,9 @@ def adjacenttodanger(point, me, snakes, width, height):
     if istouchingothersnake(point, me, snakes):
         print('touching snake')
         return True
-    if istouchingself(point, me):
-        print('touching self')
-        return True
+    # if istouchingself(point, me):
+    #     print('touching self')
+    #     return True
 
 
 def donthitsnakes(head, snakes):
