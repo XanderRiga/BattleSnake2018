@@ -53,7 +53,6 @@ def move():
 
     me = data['you']['body']['data']
 
-    #donthitneck(me)
     donthitwalls(me, width, height)
     donthittail(me)
     donthitsnakes(me[0], snakes)
@@ -65,11 +64,12 @@ def move():
         taunt = 'MICHAEL!!!!!!'
         direction = 'up'
 
-    print(direction)
+    #print(direction)
     return {
         'move': direction,
         'taunt': taunt
     }
+
 
 def donthitsnakes(head, snakes):
     """goes through entire snake array and stops it from directly hitting other snakes"""
@@ -81,6 +81,7 @@ def donthitsnakes(head, snakes):
             if adj and adj in directions:
                 directions.remove(adj)
 
+
 def donthittail(me):
     global directions
     head = me[0]
@@ -89,6 +90,7 @@ def donthittail(me):
         adj = findadjacentdir(head, x)
         if adj and adj in directions:
             directions.remove(adj)
+
 
 def donthitwalls(me, width, height):
     """Stops the snake from hitting any walls"""
@@ -103,15 +105,6 @@ def donthitwalls(me, width, height):
         directions.remove('up')
     if head['y'] == height-1:
         directions.remove('down')
-
-# def donthitneck(me):
-#     """Stops the snake from hitting its own neck"""
-#     global directions
-#     head = me[0]
-#     neck = me[1]
-#     neckdir = findadjacentdir(head, neck)
-#     if neckdir and neckdir in directions:
-#         directions.remove(neckdir)
 
 
 def findadjacentdir(a, b):
