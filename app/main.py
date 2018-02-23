@@ -27,8 +27,6 @@ def start():
         bottle.request.urlparts.netloc
     )
 
-    # TODO: Do things with data
-
     return {
         'color': '#ffcc00',
         'head_url': head_url,
@@ -135,13 +133,25 @@ def istouchingsnake(point, me, snakes):
 
     for snake in snakes['data']:
         for bodypart in snake['body']['data']:
-            if bodypart != head and bodypart != neck:
+            if bodypart not in me:
                 adj = isadjacentdiagonal(point, bodypart)
                 if adj:
                     print('Adjacent Points:')
                     print(point)
                     print(bodypart)
                     return True
+
+    return False
+
+
+def istouchingself(point, me):
+    """checks if a point is touching this snake, not including head or neck"""
+    self = me[2:]
+
+    for x in self:
+        adj = findadjacentdir(point, x)
+        if adj:
+            return True
 
     return False
 
