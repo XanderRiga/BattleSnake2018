@@ -81,10 +81,10 @@ def donthitneck(me):
 
 def findadjacentdir(a, b):
     """Gives direction from a to b if they are adjacent, if they are not adjacent returns false"""
-    ax = a[0]
-    ay = a[1]
-    bx = b[0]
-    by = b[1]
+    ax = a['x']
+    ay = a['y']
+    bx = b['x']
+    by = b['y']
     xdiff = ax - bx
     ydiff = ay - by
 
