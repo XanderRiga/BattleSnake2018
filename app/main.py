@@ -69,7 +69,7 @@ def donthitsnakes(head, snakes):
     global directions
 
     for snake in snakes:
-        for bodypart in snake:
+        for bodypart in snake['body']:
             adj = findadjacentdir(head, bodypart)
             if adj and adj in directions:
                 print('snake in ' + adj + ' direction')
