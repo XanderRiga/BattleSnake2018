@@ -54,7 +54,7 @@ def move():
 
     donthitneck(me)
     donthitwalls(me, width, height)
-    # donthittail(me)
+    donthittail(me)
     donthitsnakes(me[0], snakes)
 
     direction = random.choice(directions)
@@ -67,23 +67,22 @@ def move():
 def donthitsnakes(head, snakes):
     global directions
 
-    for snake in snakes:
-        print(snake)
-        # for bodypart in snake['body']:
-        #     adj = findadjacentdir(head, bodypart)
-        #     if adj and adj in directions:
-        #         print('snake in ' + adj + ' direction')
-        #         directions.remove(adj)
+    for snake in snakes['data']:
+        for bodypart in snake['body']['data']:
+            adj = findadjacentdir(head, bodypart)
+            if adj and adj in directions:
+                print('snake in ' + adj + ' direction')
+                directions.remove(adj)
 
-# def donthittail(me):
-#     global directions
-#     head = me[0]
-#
-#     for x in me:
-#         adj = findadjacentdir(head, x)
-#         if adj and adj in directions:
-#             print('removing ' + adj)
-#             directions.remove(adj)
+def donthittail(me):
+    global directions
+    head = me[0]
+
+    for x in me:
+        adj = findadjacentdir(head, x)
+        if adj and adj in directions:
+            print('removing ' + adj)
+            directions.remove(adj)
 
 def donthitwalls(me, width, height):
     """Stops the snake from hitting any walls"""
