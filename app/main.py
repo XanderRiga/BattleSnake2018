@@ -79,7 +79,6 @@ def donthitsnakes(head, snakes):
         for bodypart in snake['body']['data']:
             adj = findadjacentdir(head, bodypart)
             if adj and adj in directions:
-                print('snake in ' + adj + ' direction')
                 directions.remove(adj)
 
 def donthittail(me):
@@ -89,7 +88,6 @@ def donthittail(me):
     for x in me:
         adj = findadjacentdir(head, x)
         if adj and adj in directions:
-            print('removing ' + adj)
             directions.remove(adj)
 
 def donthitwalls(me, width, height):
@@ -99,26 +97,21 @@ def donthitwalls(me, width, height):
 
     if head['x'] == 0:
         directions.remove('left')
-        print('wall on left')
     if head['x'] == width-1:
         directions.remove('right')
-        print('wall on right')
     if head['y'] == 0:
         directions.remove('up')
-        print('wall up')
     if head['y'] == height-1:
         directions.remove('down')
-        print('wall down')
 
-def donthitneck(me):
-    """Stops the snake from hitting its own neck"""
-    global directions
-    head = me[0]
-    neck = me[1]
-    neckdir = findadjacentdir(head, neck)
-    print('neck direction: ' + str(neckdir))
-    if neckdir and neckdir in directions:
-        directions.remove(neckdir)
+# def donthitneck(me):
+#     """Stops the snake from hitting its own neck"""
+#     global directions
+#     head = me[0]
+#     neck = me[1]
+#     neckdir = findadjacentdir(head, neck)
+#     if neckdir and neckdir in directions:
+#         directions.remove(neckdir)
 
 
 def findadjacentdir(a, b):
