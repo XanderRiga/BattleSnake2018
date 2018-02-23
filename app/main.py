@@ -67,7 +67,7 @@ def donthittail(me):
 
     for x in me:
         adj = findadjacentdir(head, x)
-        if adj:
+        if adj and adj in directions:
             print('removing ' + adj)
             directions.remove(adj)
 
