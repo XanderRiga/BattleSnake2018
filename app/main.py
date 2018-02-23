@@ -56,6 +56,7 @@ def move():
 
     me = data['you']
 
+    print(me)
     donthitneck(me)
 
     direction = random.choice(directions)
