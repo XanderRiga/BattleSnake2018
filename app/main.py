@@ -79,7 +79,7 @@ def adjacenttodanger(point, me, snakes, width, height):
     if istouchingwall(point, width, height):
         print('touching wall')
         return True
-    if istouchingsnake(point, snakes):
+    if istouchingothersnake(point, me, snakes):
         print('touching snake')
         return True
     if istouchingself(point, me):
@@ -141,15 +141,19 @@ def istouchingself(point, me):
     return False
 
 
-def istouchingsnake(point, snakes):
+def istouchingothersnake(point, me, snakes):
+    head = me[0]
+    neck = me[1]
+
     for snake in snakes['data']:
         for bodypart in snake['body']['data']:
-            adj = findadjacentdir(point, bodypart)
-            if adj:
-                print('Adjacent Points')
-                print(point)
-                print(bodypart)
-                return True
+            if bodypart != head and bodypart != neck:
+                adj = findadjacentdir(point, bodypart)
+                if adj:
+                    print('Adjacent Points')
+                    print(point)
+                    print(bodypart)
+                    return True
 
     return False
 
