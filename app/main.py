@@ -81,6 +81,9 @@ def adjacenttodanger(point, me, snakes, width, height):
     if istouchingsnake(point, me, snakes):
         print('touching snake')
         return True
+    if istouchingself(point, me):
+        print('touching self')
+        return True
 
 
 def donthitsnakes(head, snakes):
@@ -136,9 +139,6 @@ def istouchingsnake(point, me, snakes):
             if bodypart not in me:
                 adj = isadjacentdiagonal(point, bodypart)
                 if adj:
-                    print('Adjacent Points:')
-                    print(point)
-                    print(bodypart)
                     return True
 
     return False
@@ -204,9 +204,6 @@ def isadjacentdiagonal(a, b):
     ydiff = ay - by
 
     if xdiff in range(-1, 1) and ydiff in range(-1, 1):
-        print('Points were marked adjacent:')
-        print(a)
-        print(b)
         return True
     else:
         return False
