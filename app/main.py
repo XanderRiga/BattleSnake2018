@@ -58,7 +58,10 @@ def move():
     if adjacenttodanger(me[0], me, snakes, width, height):
         # Need to do something here to handle the not going inside on itself
         print('danger zone')
-        left, right, up, down = True
+        left = True
+        right = True
+        up = True
+        down = True
 
         for x in directions:
             if x == 'left':
