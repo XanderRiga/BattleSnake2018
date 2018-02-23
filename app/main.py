@@ -54,7 +54,7 @@ def move():
     #     if y['id'] == data['you']:
     #         me = y
 
-    me = data['you']
+    me = data['you']['body']
 
     print(me)
     donthitneck(me)
@@ -71,8 +71,8 @@ def donthitneck(me):
     """Stops the snake from hitting its own neck"""
     global directions
     print(me)
-    head = me['body'][0]
-    neck = me['body'][1]
+    head = me['data'][0]
+    neck = me['data'][1]
     neckdir = findadjacentdir(head, neck)
     print('neck direction: ' + str(neckdir))
     if neckdir and neckdir in directions:
