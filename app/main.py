@@ -66,16 +66,16 @@ def move():
         leftsize = rightsize = upsize = downsize = 0
         for dir in directions:
             if dir == 'left':
-                leftmatrix = floodfill(board, getleft(me[0]))
+                leftmatrix = floodfill(board, getleft(me[0]), width, height)
                 leftsize = zeros - leftmatrix
             if dir == 'right':
-                rightmatrix = floodfill(board, getright(me[0]))
+                rightmatrix = floodfill(board, getright(me[0]), width, height)
                 rightsize = zeros - rightmatrix
             if dir == 'up':
-                upmatrix = floodfill(board, getup(me[0]))
+                upmatrix = floodfill(board, getup(me[0]), width, height)
                 upsize = zeros - upmatrix
             if dir == 'down':
-                downmatrix = floodfill(board, getdown(me[0]))
+                downmatrix = floodfill(board, getdown(me[0]), width, height)
                 downsize = zeros - downmatrix
 
         if leftsize < len(me) + 2 and 'left' in directions:
@@ -110,7 +110,7 @@ def printmatrix(matrix):
         print(matrix[x])
 
 
-def floodfill(matrix, point):
+def floodfill(matrix, point, width, height):
     y = point['x']
     x = point['y']
     count = 0
@@ -120,13 +120,13 @@ def floodfill(matrix, point):
         if x > 0 and matrix[x-1][y] != 1:
             count += 1
             return floodfill(matrix, getup(point))
-        if x < len(matrix)-1 and matrix[x+1][y] != 1:
+        if x < height-1 and matrix[x+1][y] != 1:
             count += 1
             return floodfill(matrix, getdown(point))
         if y > 0 and matrix[x][y-1] != 1:
             count += 1
             return floodfill(matrix, getleft(point))
-        if y < len(matrix[0])-1 and matrix[x][y+1] != 1:
+        if y < width-1 and matrix[x][y+1] != 1:
             count += 1
             return floodfill(matrix, getright(point))
 
