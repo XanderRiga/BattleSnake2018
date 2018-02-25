@@ -59,7 +59,7 @@ def move():
 
     matrix = [[0] * height for _ in range(width)]
     board = buildboard(matrix, me, snakes)
-    print(board)
+    printmatrix(board)
     zeros = countmatrix0(matrix)
     if selftouchpoint and len(directions) == 2:
         leftsize = rightsize = upsize = downsize = 0
@@ -102,6 +102,11 @@ def move():
         'move': direction,
         'taunt': taunt
     }
+
+
+def printmatrix(matrix):
+    for x in range(len(matrix)):
+        print(matrix[x])
 
 
 def floodfill(matrix, point, count = 0):
