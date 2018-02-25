@@ -123,8 +123,8 @@ def floodfill(matrix, point, count = 0):
 
 def countmatrix0(matrix):
     count = 0
-    for x in matrix:
-        for y in x:
+    for x in range(len(matrix)):
+        for y in range(len(matrix[x])):
             if matrix[x][y] == 0:
                 count += 1
 
