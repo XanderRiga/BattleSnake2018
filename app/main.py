@@ -111,6 +111,7 @@ def flippoint(point):
     point['y'] = temp
     return point
 
+
 def printmatrix(matrix):
     for x in range(len(matrix)):
         print(matrix[x])
@@ -125,15 +126,19 @@ def floodfill(matrix, point, width, height):
 
         if x > 0 and matrix[x-1][y] != 1:
             count += 1
+            print('going up')
             return floodfill(matrix, getup(point), width, height)
         if x < height-1 and matrix[x+1][y] != 1:
+            print('going down')
             count += 1
             return floodfill(matrix, getdown(point), width, height)
         if y > 0 and matrix[x][y-1] != 1:
             count += 1
+            print('going left')
             return floodfill(matrix, getleft(point), width, height)
         if y < width-1 and matrix[x][y+1] != 1:
             count += 1
+            print('going right')
             return floodfill(matrix, getright(point), width, height)
 
     if count == 0:
