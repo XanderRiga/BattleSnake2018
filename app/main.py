@@ -125,6 +125,7 @@ def floodfill(matrix, point, count = 0):
         if y < len(matrix[0])-1 and matrix[x][y+1]:
             return floodfill(matrix, getdown(point), count+1)
 
+    print('matrix 0 count after fill: ' + str(countmatrix0(matrix)))
     return countmatrix0(matrix)
 
 
