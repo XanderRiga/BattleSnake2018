@@ -116,7 +116,7 @@ def printmatrix(matrix):
     for x in range(len(matrix)):
         print(matrix[x])
 
-
+# TODO: This is butchering all directions, it is the transpose of how our "point" object thinks of the x and y axes. need to flip everything involved
 def floodfill(matrix, point, width, height):
     y = point['x']
     x = point['y']
