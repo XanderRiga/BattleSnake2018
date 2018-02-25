@@ -79,16 +79,16 @@ def move():
 
         if leftsize < len(me) + 2 and 'left' in directions:
             directions.remove('left')
-            print('removing left')
+            print('removing left, size: ' + str(leftsize))
         if rightsize < len(me) + 2 and 'right' in directions:
             directions.remove('right')
-            print('removing right')
+            print('removing right, size: ' + str(rightsize))
         if upsize < len(me) + 2 and 'up' in directions:
             directions.remove('up')
-            print('removing up')
+            print('removing up, size: ' + str(upsize))
         if downsize < len(me) + 2 and 'down' in directions:
             directions.remove('down')
-            print('removing down')
+            print('removing down, size: ' + str(downsize))
 
 
     if directions:
@@ -141,13 +141,13 @@ def buildboard(matrix, me, snakes):
     for point in me:
         x = point['x']
         y = point['y']
-        matrix[x][y] = 1
+        matrix[y][x] = 1
 
     for snake in snakes['data']:
         for bodypart in snake['body']['data']:
             x = bodypart['x']
             y = bodypart['y']
-            matrix[x][y] = 1
+            matrix[y][x] = 1
 
     return matrix
 
