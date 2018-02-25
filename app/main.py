@@ -66,16 +66,16 @@ def move():
         leftsize = rightsize = upsize = downsize = 0
         for dir in directions:
             if dir == 'left':
-                leftmatrix = floodfill(board, getleft(me[0]), width, height)
+                leftmatrix = floodfill(board, getup(me[0]), width, height)
                 leftsize = zeros - leftmatrix
             if dir == 'right':
-                rightmatrix = floodfill(board, getright(me[0]), width, height)
+                rightmatrix = floodfill(board, getdown(me[0]), width, height)
                 rightsize = zeros - rightmatrix
             if dir == 'up':
-                upmatrix = floodfill(board, getup(me[0]), width, height)
+                upmatrix = floodfill(board, getleft(me[0]), width, height)
                 upsize = zeros - upmatrix
             if dir == 'down':
-                downmatrix = floodfill(board, getdown(me[0]), width, height)
+                downmatrix = floodfill(board, getright(me[0]), width, height)
                 downsize = zeros - downmatrix
 
         if leftsize < len(me) + 2 and 'left' in directions:
