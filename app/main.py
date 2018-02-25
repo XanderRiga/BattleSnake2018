@@ -55,8 +55,40 @@ def move():
     donthitwalls(me, width, height)
     donthittail(me)
 
-    if adjacenttodanger(me[0], me, snakes, width, height):
-        print('danger zone')
+    selftouchpoint = istouchingself(me[0], me)
+
+    matrix = [[0] * height for _ in range(width)]
+    board = buildboard(matrix, me, snakes)
+    zeros = countmatrix0(matrix)
+    if selftouchpoint and len(directions) == 2:
+        leftsize = rightsize = upsize = downsize = 0
+        for dir in directions:
+            if dir == 'left':
+                leftmatrix = floodfill(board, getleft(me[0]))
+                leftsize = zeros - leftmatrix
+            if dir == 'right':
+                rightmatrix = floodfill(board, getright(me[0]))
+                rightsize = zeros - rightmatrix
+            if dir == 'up':
+                upmatrix = floodfill(board, getup(me[0]))
+                upsize = zeros - upmatrix
+            if dir == 'down':
+                downmatrix = floodfill(board, getdown(me[0]))
+                downsize = zeros - downmatrix
+
+        if leftsize < len(me) + 2 and 'left' in directions:
+            directions.remove('left')
+            print('removing left')
+        if rightsize < len(me) + 2 and 'right' in directions:
+            directions.remove('right')
+            print('removing right')
+        if upsize < len(me) + 2 and 'up' in directions:
+            directions.remove('up')
+            print('removing up')
+        if downsize < len(me) + 2 and 'down' in directions:
+            directions.remove('down')
+            print('removing down')
+
 
     if directions:
         direction = random.choice(directions)
@@ -65,25 +97,68 @@ def move():
         taunt = 'MICHAEL!!!!!!'
         direction = 'up'
 
-    # print(direction)
     return {
         'move': direction,
         'taunt': taunt
     }
 
 
-# TODO This is still picking up non dangerous things as danger, and the diagonal stuff isn't working
-def adjacenttodanger(point, me, snakes, width, height):
-    """Checks if point is adjacent to snakes, edge of board, or itself(not neck/head) including diagonally"""
-    if istouchingwall(point, width, height):
-        print('touching wall')
-        return True
-    if istouchingsnake(point, me, snakes):
-        print('touching snake')
-        return True
-    if istouchingself(point, me):
-        print('touching self')
-        return True
+def floodfill(matrix, point, count = 0):
+    x = point['x']
+    y = point['y']
+    if matrix[x][y] == 0:
+        matrix[x][y] = 1
+
+        if x > 0 and matrix[x-1][y] != 1:
+            return floodfill(matrix, getleft(point), count+1)
+        if x < len(matrix)-1 and matrix[x+1][y]:
+            return floodfill(matrix, getright(point), count+1)
+        if y > 0 and matrix[x][y-1] != 1:
+            return floodfill(matrix, getup(point), count+1)
+        if y < len(matrix[0])-1 and matrix[x][y+1]:
+            return floodfill(matrix, getdown(point), count+1)
+
+    return countmatrix0(matrix)
+
+
+def countmatrix0(matrix):
+    count = 0
+    for x in matrix:
+        for y in x:
+            if matrix[x][y] == 0:
+                count += 1
+
+    return count
+
+
+def buildboard(matrix, me, snakes):
+    for point in me:
+        x = point['x']
+        y = point['y']
+        matrix[x][y] = 1
+
+    for snake in snakes:
+        for bodypart in snake['body']['data']:
+            x = bodypart['x']
+            y = bodypart['y']
+            matrix[x][y] = 1
+
+    return matrix
+
+
+
+# # TODO This is still picking up non dangerous things as danger, and the diagonal stuff isn't working
+# def adjacenttodanger(point, me, snakes, width, height):
+#     """Checks if point is adjacent to snakes, edge of board, or itself(not neck/head) including diagonally"""
+#     if istouchingwall(point, width, height):
+#         print('touching wall')
+#         return True
+#     if istouchingsnake(point, me, snakes):
+#         print('touching snake')
+#         return True
+#     if istouchingself(point, me):
+#         print('touching self')
+#         return True
 
 
 def donthitsnakes(head, snakes):
@@ -129,19 +204,22 @@ def donthitwalls(me, width, height):
 #
 
 
-def istouchingsnake(point, me, snakes):
+
+def dirtouchingsnake(point, me, snakes):
     """checks if the point is touching a snake, not including this snakes head or neck"""
     head = me[0]
     neck = me[1]
 
+    dirs = []
+
     for snake in snakes['data']:
         for bodypart in snake['body']['data']:
             if bodypart not in me:
-                adj = isadjacentdiagonal(point, bodypart)
+                adj = findadjacentdir(point, bodypart)
                 if adj:
-                    return True
+                    dirs.append(adj)
 
-    return False
+    return dirs
 
 
 def istouchingself(point, me):
@@ -149,25 +227,37 @@ def istouchingself(point, me):
     self = me[2:]
 
     for x in self:
-        adj = findadjacentdir(point, x)
-        if adj:
-            return True
+        if isadjacentdiagonal(point, x):
+            return x
 
     return False
 
 
-def istouchingwall(point, width, height):
-    """returns true if the point is adjacent to a wall"""
+def dirtouchingself(point, me):
+    """checks if a point is touching this snake, not including head or neck"""
+    dirs = []
+
+    for x in me:
+        dir = findadjacentdir(point, x)
+        if dir:
+            dirs.append(dir)
+
+    return dirs
+
+
+def dirtouchingwall(point, width, height):
+    """returns direction of wall if any"""
+    walls = []
     if point['x'] == 0:
-        return True
+        walls.append('left')
     if point['x'] == width - 1:
-        return True
+        walls.append('right')
     if point['y'] == 0:
-        return True
+        walls.append('up')
     if point['y'] == height - 1:
-        return True
+        walls.append('down')
 
-    return False
+    return walls
 
 
 def findadjacentdir(a, b):
@@ -203,10 +293,26 @@ def isadjacentdiagonal(a, b):
     xdiff = ax - bx
     ydiff = ay - by
 
-    if xdiff in range(-1, 1) and ydiff in range(-1, 1):
+    if xdiff in range(-1, 2) and ydiff in range(-1, 2):
         return True
     else:
         return False
+
+def getleft(point):
+    point['x'] -= 1
+    return point
+
+def getright(point):
+    point['x'] += 1
+    return point
+
+def getup(point):
+    point['y'] -= 1
+    return point
+
+def getdown(point):
+    point['y'] += 1
+    return point
 
 
 # Expose WSGI app (so gunicorn can find it)
