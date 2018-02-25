@@ -111,24 +111,24 @@ def printmatrix(matrix):
 
 
 def floodfill(matrix, point):
-    x = point['x']
-    y = point['y']
+    y = point['x']
+    x = point['y']
     count = 0
     if matrix[x][y] == 0:
         matrix[x][y] = 1
 
         if x > 0 and matrix[x-1][y] != 1:
             count += 1
-            return floodfill(matrix, getleft(point))
-        if x < len(matrix)-1 and matrix[x+1][y]:
-            count += 1
-            return floodfill(matrix, getright(point))
-        if y > 0 and matrix[x][y-1] != 1:
-            count += 1
             return floodfill(matrix, getup(point))
-        if y < len(matrix[0])-1 and matrix[x][y+1]:
+        if x < len(matrix)-1 and matrix[x+1][y] != 1:
             count += 1
             return floodfill(matrix, getdown(point))
+        if y > 0 and matrix[x][y-1] != 1:
+            count += 1
+            return floodfill(matrix, getleft(point))
+        if y < len(matrix[0])-1 and matrix[x][y+1] != 1:
+            count += 1
+            return floodfill(matrix, getright(point))
 
     if count == 0:
         print('matrix after floodfill')
