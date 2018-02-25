@@ -119,16 +119,16 @@ def floodfill(matrix, point, width, height):
 
         if x > 0 and matrix[x-1][y] != 1:
             count += 1
-            return floodfill(matrix, getup(point))
+            return floodfill(matrix, getup(point), width, height)
         if x < height-1 and matrix[x+1][y] != 1:
             count += 1
-            return floodfill(matrix, getdown(point))
+            return floodfill(matrix, getdown(point), width, height)
         if y > 0 and matrix[x][y-1] != 1:
             count += 1
-            return floodfill(matrix, getleft(point))
+            return floodfill(matrix, getleft(point), width, height)
         if y < width-1 and matrix[x][y+1] != 1:
             count += 1
-            return floodfill(matrix, getright(point))
+            return floodfill(matrix, getright(point), width, height)
 
     if count == 0:
         print('matrix after floodfill')
