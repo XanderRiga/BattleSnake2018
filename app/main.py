@@ -137,7 +137,7 @@ def buildboard(matrix, me, snakes):
         y = point['y']
         matrix[x][y] = 1
 
-    for snake in snakes:
+    for snake in snakes['data']:
         for bodypart in snake['body']['data']:
             x = bodypart['x']
             y = bodypart['y']
