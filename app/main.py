@@ -61,6 +61,7 @@ def move():
     board = buildboard(matrix, me, snakes)
     printmatrix(board)
     zeros = countmatrix0(matrix)
+    print('zeros: ' + str(zeros))
     if selftouchpoint and len(directions) == 2:
         leftsize = rightsize = upsize = downsize = 0
         for dir in directions:
