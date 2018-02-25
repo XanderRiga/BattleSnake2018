@@ -110,20 +110,20 @@ def printmatrix(matrix):
         print(matrix[x])
 
 
-def floodfill(matrix, point, count = 0):
-    x = point['x']
-    y = point['y']
+def floodfill(matrix, point):
+    y = point['x']
+    x = point['y']
     if matrix[x][y] == 0:
         matrix[x][y] = 1
 
         if x > 0 and matrix[x-1][y] != 1:
-            return floodfill(matrix, getleft(point), count+1)
+            return floodfill(matrix, getleft(point))
         if x < len(matrix)-1 and matrix[x+1][y]:
-            return floodfill(matrix, getright(point), count+1)
+            return floodfill(matrix, getright(point))
         if y > 0 and matrix[x][y-1] != 1:
-            return floodfill(matrix, getup(point), count+1)
+            return floodfill(matrix, getup(point))
         if y < len(matrix[0])-1 and matrix[x][y+1]:
-            return floodfill(matrix, getdown(point), count+1)
+            return floodfill(matrix, getdown(point))
 
     print('matrix after floodfill')
     printmatrix(matrix)
