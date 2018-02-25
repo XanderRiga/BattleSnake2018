@@ -111,8 +111,8 @@ def printmatrix(matrix):
 
 
 def floodfill(matrix, point):
-    y = point['x']
-    x = point['y']
+    x = point['x']
+    y = point['y']
     count = 0
     if matrix[x][y] == 0:
         matrix[x][y] = 1
