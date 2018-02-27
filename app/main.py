@@ -144,7 +144,7 @@ def countmatrix0(matrix):
 
 
 def buildboard(me, snakes, width, height):
-    matrix = [[0] * height for _ in range(width)]
+    matrix = [[0] * width for _ in range(height)]
 
     for point in me[:-1]:  # cut off last tile of tail since it will be moved for next turn
         x = point['x']
