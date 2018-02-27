@@ -55,7 +55,7 @@ def move():
     donthitwalls(me, width, height)
     donthittail(me)
 
-    if len(directions) == 2:
+    if len(directions) == 2 or diagonaldanger(me, snakes):
         board = buildboard(me, snakes, width, height)
         zeros = countmatrix0(board)
         print('zeros: ' + str(zeros))
@@ -160,7 +160,6 @@ def buildboard(me, snakes, width, height):
     return matrix
 
 
-
 # # TODO This is still picking up non dangerous things as danger, and the diagonal stuff isn't working
 # def adjacenttodanger(point, me, snakes, width, height):
 #     """Checks if point is adjacent to snakes, edge of board, or itself(not neck/head) including diagonally"""
@@ -216,6 +215,32 @@ def donthitwalls(me, width, height):
 #
 #
 
+def isdiagonal(a, b):
+    ax = a["x"]
+    ay = a["y"]
+    bx = b["x"]
+    by = b["y"]
+
+    if abs(ax - bx) == 1 and abs(ay - by) == 1:
+        return True
+    else:
+        return False
+
+
+def diagonaldanger(me, snakes):
+    """returns true if there is a dangerous point diagonal of the point"""
+    head = me[0]
+
+    for snake in snakes['data']:
+        for bodypart in snake['body']['data']:
+            if isdiagonal(head, bodypart):
+                return True
+
+    for point in me[:-1]:
+        if isdiagonal(head, point):
+            return True
+
+    return False
 
 
 def dirtouchingsnake(point, me, snakes):
