@@ -133,16 +133,16 @@ def floodfill(matrix, x, y, width, height, list):
 
         if x > 0 and matrix[x-1][y] != 1:
             print('going up')
-            return floodfill(matrix, x-1, y, width, height)
+            return floodfill(matrix, x-1, y, width, height, list)
         if x < height-1 and matrix[x+1][y] != 1:
             print('going down')
-            return floodfill(matrix, x+1, y, width, height)
+            return floodfill(matrix, x+1, y, width, height, list)
         if y > 0 and matrix[x][y-1] != 1:
             print('going left')
-            return floodfill(matrix, x, y-1, width, height)
+            return floodfill(matrix, x, y-1, width, height, list)
         if y < width-1 and matrix[x][y+1] != 1:
             print('going right')
-            return floodfill(matrix, x, y+1, width, height)
+            return floodfill(matrix, x, y+1, width, height, list)
 
 
 def countmatrix0(matrix):
