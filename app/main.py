@@ -55,39 +55,46 @@ def move():
     donthitwalls(me, width, height)
     donthittail(me)
 
-    selftouchpoint = istouchingself(me[0], me)
+    # selftouchpoint = istouchingself(me[0], me)
 
-    matrix = [[0] * height for _ in range(width)]
-    board = buildboard(matrix, me, snakes)
-    printmatrix(board)
-    zeros = countmatrix0(matrix)
-    print('zeros: ' + str(zeros))
-    if selftouchpoint and len(directions) == 2:
+    if len(directions) == 2:
+        board = buildboard(me, snakes, width, height)
+        printmatrix(board)
+        zeros = countmatrix0(board)
+        print('zeros: ' + str(zeros))
+
+        headx = me[0]["x"]
+        heady = me[0]["y"]
+
+        leftlist = []
+        rightlist = []
+        uplist = []
+        downlist = []
         leftsize = rightsize = upsize = downsize = 0
         for dir in directions:
             if dir == 'left':
-                leftmatrix = floodfill(board, getup(flippoint(me[0])), width, height)
-                leftsize = zeros - leftmatrix
+                floodfill(board, heady-1, headx, width, height, leftlist)
+                leftsize = len(leftlist)
             if dir == 'right':
-                rightmatrix = floodfill(board, getdown(flippoint(me[0])), width, height)
-                rightsize = zeros - rightmatrix
+                floodfill(board, heady+1, headx, width, height, rightlist)
+                rightsize = len(rightlist)
             if dir == 'up':
-                upmatrix = floodfill(board, getleft(flippoint(me[0])), width, height)
-                upsize = zeros - upmatrix
+                floodfill(board, heady, headx-1, width, height, uplist)
+                upsize = len(uplist)
             if dir == 'down':
-                downmatrix = floodfill(board, getright(flippoint(me[0])), width, height)
-                downsize = zeros - downmatrix
+                floodfill(board, heady, headx+1, width, height, downlist)
+                downsize = len(downlist)
 
-        if leftsize < len(me) + 2 and 'left' in directions:
+        if leftlist and leftsize < len(me) + 2 and 'left' in directions:
             directions.remove('left')
             print('removing left, size: ' + str(leftsize))
-        if rightsize < len(me) + 2 and 'right' in directions:
+        if rightlist and rightsize < len(me) + 2 and 'right' in directions:
             directions.remove('right')
             print('removing right, size: ' + str(rightsize))
-        if upsize < len(me) + 2 and 'up' in directions:
+        if uplist and upsize < len(me) + 2 and 'up' in directions:
             directions.remove('up')
             print('removing up, size: ' + str(upsize))
-        if downsize < len(me) + 2 and 'down' in directions:
+        if downlist and downsize < len(me) + 2 and 'down' in directions:
             directions.remove('down')
             print('removing down, size: ' + str(downsize))
 
@@ -116,36 +123,26 @@ def printmatrix(matrix):
     for x in range(len(matrix)):
         print(matrix[x])
 
+
 # TODO: This is butchering all directions, it is the transpose of how our "point" object thinks of the x and y axes. need to flip everything involved
-def floodfill(matrix, point, width, height):
-    y = point['x']
-    x = point['y']
-    count = 0
+def floodfill(matrix, x, y, width, height, list):
+    """returns a flood filled board from a given point. ALL X AND Y ARE IN REFERENCE TO BOARD COORDS"""
     if matrix[x][y] == 0:
         matrix[x][y] = 1
+        list.append(1)
 
         if x > 0 and matrix[x-1][y] != 1:
-            count += 1
             print('going up')
-            return floodfill(matrix, getup(point), width, height)
+            return floodfill(matrix, x-1, y, width, height)
         if x < height-1 and matrix[x+1][y] != 1:
             print('going down')
-            count += 1
-            return floodfill(matrix, getdown(point), width, height)
+            return floodfill(matrix, x+1, y, width, height)
         if y > 0 and matrix[x][y-1] != 1:
-            count += 1
             print('going left')
-            return floodfill(matrix, getleft(point), width, height)
+            return floodfill(matrix, x, y-1, width, height)
         if y < width-1 and matrix[x][y+1] != 1:
-            count += 1
             print('going right')
-            return floodfill(matrix, getright(point), width, height)
-
-    if count == 0:
-        print('matrix after floodfill')
-        printmatrix(matrix)
-        print('matrix 0 count after fill: ' + str(countmatrix0(matrix)))
-        return countmatrix0(matrix)
+            return floodfill(matrix, x, y+1, width, height)
 
 
 def countmatrix0(matrix):
@@ -158,17 +155,19 @@ def countmatrix0(matrix):
     return count
 
 
-def buildboard(matrix, me, snakes):
-    for point in me:
+def buildboard(me, snakes, width, height):
+    matrix = [[0] * height for _ in range(width)]
+
+    for point in me[:-1]:  # cut off last tile of tail since it will be moved for next turn
         x = point['x']
         y = point['y']
-        matrix[y][x] = 1
+        matrix[x][y] = 1
 
     for snake in snakes['data']:
         for bodypart in snake['body']['data']:
             x = bodypart['x']
             y = bodypart['y']
-            matrix[y][x] = 1
+            matrix[x][y] = 1
 
     return matrix
 
@@ -186,7 +185,6 @@ def buildboard(matrix, me, snakes):
 #     if istouchingself(point, me):
 #         print('touching self')
 #         return True
-
 
 def donthitsnakes(head, snakes):
     """goes through entire snake array and stops it from directly hitting any snakes"""
