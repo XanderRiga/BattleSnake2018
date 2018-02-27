@@ -130,13 +130,13 @@ def floodfill(matrix, x, y, width, height, list):
         matrix[x][y] = 1
         list.append(1)
 
-        if x > 0 and matrix[x-1][y] != 1:
+        if x > 0:
             return floodfill(matrix, x-1, y, width, height, list)
-        if x < height-1 and matrix[x+1][y] != 1:
+        if x < height-1:
             return floodfill(matrix, x+1, y, width, height, list)
-        if y > 0 and matrix[x][y-1] != 1:
+        if y > 0:
             return floodfill(matrix, x, y-1, width, height, list)
-        if y < width-1 and matrix[x][y+1] != 1:
+        if y < width-1:
             return floodfill(matrix, x, y+1, width, height, list)
 
         printmatrix(matrix)
@@ -199,7 +199,7 @@ def donthittail(me):
     global directions
     head = me[0]
 
-    for x in me:
+    for x in me[:-1]: # it is ok to move where the last point in our tail is
         adj = findadjacentdir(head, x)
         if adj and adj in directions:
             directions.remove(adj)
