@@ -131,9 +131,6 @@ def floodfill(matrix, x, y, width, height, list):
             floodfill(matrix, x, y-1, width, height, list)
         if y < width-1:
             floodfill(matrix, x, y+1, width, height, list)
-    else:
-        print('There are no directions to go from x: ' + str(x) + "y: " + str(y))
-        printmatrix(matrix)
 
 
 def countmatrix0(matrix):
