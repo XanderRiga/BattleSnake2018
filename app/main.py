@@ -59,7 +59,6 @@ def move():
         board = buildboard(me, snakes, width, height)
         zeros = countmatrix0(board)
         print('zeros: ' + str(zeros))
-        printtransposematrix(board)
 
         headx = me[0]["x"]
         heady = me[0]["y"]
@@ -125,12 +124,6 @@ def printmatrix(matrix):
         print(matrix[x])
 
 
-def printtransposematrix(matrix):
-    newmatrix = zip(*matrix)
-    for x in range(len(newmatrix)):
-        print(matrix[x])
-
-
 def floodfill(matrix, x, y, width, height, list):
     """returns a flood filled board from a given point. ALL X AND Y ARE IN REFERENCE TO BOARD COORDS"""
     if matrix[x][y] == 0:
@@ -145,6 +138,8 @@ def floodfill(matrix, x, y, width, height, list):
             return floodfill(matrix, x, y-1, width, height, list)
         if y < width-1 and matrix[x][y+1] != 1:
             return floodfill(matrix, x, y+1, width, height, list)
+
+        printmatrix(matrix)
 
 
 def countmatrix0(matrix):
