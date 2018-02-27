@@ -59,7 +59,6 @@ def move():
 
     if len(directions) == 2:
         board = buildboard(me, snakes, width, height)
-        printmatrix(board)
         zeros = countmatrix0(board)
         print('zeros: ' + str(zeros))
 
@@ -124,9 +123,15 @@ def printmatrix(matrix):
         print(matrix[x])
 
 
-# TODO: This is butchering all directions, it is the transpose of how our "point" object thinks of the x and y axes. need to flip everything involved
+def printtransposematrix(matrix):
+    newmatrix = zip(*matrix)
+    for x in range(len(newmatrix)):
+        print(matrix[x])
+
+
 def floodfill(matrix, x, y, width, height, list):
     """returns a flood filled board from a given point. ALL X AND Y ARE IN REFERENCE TO BOARD COORDS"""
+    printtransposematrix(matrix)
     if matrix[x][y] == 0:
         matrix[x][y] = 1
         list.append(1)
