@@ -125,11 +125,11 @@ def floodfill(matrix, x, y, width, height, list):
 
         if x > 0:
             floodfill(matrix, x-1, y, width, height, list)
-        if x < height-1:
+        if x < width-1:
             floodfill(matrix, x+1, y, width, height, list)
         if y > 0:
             floodfill(matrix, x, y-1, width, height, list)
-        if y < width-1:
+        if y < height-1:
             floodfill(matrix, x, y+1, width, height, list)
 
 
