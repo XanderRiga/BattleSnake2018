@@ -55,8 +55,6 @@ def move():
     donthitwalls(me, width, height)
     donthittail(me)
 
-    # selftouchpoint = istouchingself(me[0], me)
-
     if len(directions) == 2:
         board = buildboard(me, snakes, width, height)
         zeros = countmatrix0(board)
@@ -85,6 +83,10 @@ def move():
                 floodfill(board, heady, headx+1, width, height, downlist)
                 downsize = len(downlist)
 
+        print(leftsize)
+        print(rightsize)
+        print(upsize)
+        print(downsize)
         if leftlist and leftsize < len(me) + 2 and 'left' in directions:
             directions.remove('left')
             print('removing left, size: ' + str(leftsize))
