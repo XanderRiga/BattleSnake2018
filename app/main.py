@@ -119,7 +119,6 @@ def printmatrix(matrix):
 
 def floodfill(matrix, x, y, width, height, list):
     """returns a flood filled board from a given point. ALL X AND Y ARE IN REFERENCE TO BOARD COORDS"""
-    printmatrix(matrix)
     if matrix[x][y] == 0:
         matrix[x][y] = 1
         list.append(1)
