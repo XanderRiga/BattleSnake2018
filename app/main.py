@@ -51,16 +51,17 @@ def move():
     # food = data['food']
 
     me = data['you']['body']['data']
+    mylength = data['you']['length']
 
     donthitsnakes(me[0], snakes)
     donthitwalls(me, width, height)
     donthittail(me)
-    avoidheadtohead(me[0], snakes)
+    avoidheadtohead(me[0], mylength, snakes)
 
     if len(directions) == 2 or diagonaldanger(me, snakes):
         board = buildboard(me, snakes, width, height)
         zeros = countmatrix0(board)
-        print('zeros: ' + str(zeros))
+        # print('zeros: ' + str(zeros))
 
         headx = me[0]["x"]
         heady = me[0]["y"]
@@ -217,20 +218,16 @@ def donthitwalls(me, width, height):
         directions.remove('down')
 
 
-def avoidheadtohead(head, snakes):
+def avoidheadtohead(head, mylength, snakes):
     global directions
     myadj = getadjpoints(head)
-    print('my adjacent points:')
-    print(myadj)
 
     othersnakeadj = []
     for snake in snakes['data']:
-        if snake['body']['data'][0] != head:
+        if snake['body']['data'][0] != head and snake['length'] > mylength:
             snakeadjpts = getadjpoints(snake['body']['data'][0])
             for z in snakeadjpts:
                 othersnakeadj.append(z)
-    print('other snake adj points:')
-    print(othersnakeadj)
 
     for x in myadj:
         for y in othersnakeadj:
