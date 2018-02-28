@@ -70,28 +70,28 @@ def move():
         downlist = []
         leftsize = rightsize = upsize = downsize = 0
         for dir in directions:
-            print('headx: ' + str(headx) + ' heady: ' + str(heady))
+            # print('headx: ' + str(headx) + ' heady: ' + str(heady))
             if dir == 'left':
-                print('flood fill on left, x ' + str(headx-1) + ' y: ' + str(heady))
+                # print('flood fill on left, x ' + str(headx-1) + ' y: ' + str(heady))
                 floodfill(board, headx-1, heady, width, height, leftlist)
                 leftsize = len(leftlist)
             if dir == 'right':
-                print('flood fill on right, x ' + str(headx+1) + ' y: ' + str(heady))
+                # print('flood fill on right, x ' + str(headx+1) + ' y: ' + str(heady))
                 floodfill(board, headx+1, heady, width, height, rightlist)
                 rightsize = len(rightlist)
             if dir == 'up':
-                print('flood fill on up, x ' + str(headx) + ' y: ' + str(heady-1))
+                # print('flood fill on up, x ' + str(headx) + ' y: ' + str(heady-1))
                 floodfill(board, headx, heady-1, width, height, uplist)
                 upsize = len(uplist)
             if dir == 'down':
-                print('flood fill on down, x ' + str(headx) + ' y: ' + str(heady+1))
+                # print('flood fill on down, x ' + str(headx) + ' y: ' + str(heady+1))
                 floodfill(board, headx, heady+1, width, height, downlist)
                 downsize = len(downlist)
 
-        print(leftsize)
-        print(rightsize)
-        print(upsize)
-        print(downsize)
+        # print(leftsize)
+        # print(rightsize)
+        # print(upsize)
+        # print(downsize)
         if leftlist and leftsize < len(me) + 2 and 'left' in directions:
             directions.remove('left')
             print('removing left, size: ' + str(leftsize))
