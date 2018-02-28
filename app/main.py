@@ -70,6 +70,7 @@ def move():
         downlist = []
         leftsize = rightsize = upsize = downsize = 0
         for dir in directions:
+            print('headx: ' + str(headx) + ' heady: ' + str(heady))
             if dir == 'left':
                 print('flood fill on left, x ' + str(headx-1) + ' y: ' + str(heady))
                 floodfill(board, headx-1, heady, width, height, leftlist)
