@@ -219,11 +219,13 @@ def donthitwalls(me, width, height):
 def avoidheadtohead(head, snakes):
     global directions
     myadj = getadjpoints(head)
+    print(myadj)
 
     othersnakeadj = []
     for snake in snakes['data']:
         if snake['body']['data'][0] != head:
             othersnakeadj.append(getadjpoints(snake['body']['data'][0]))
+    print(othersnakeadj)
 
     for x in myadj:
         for y in othersnakeadj:
