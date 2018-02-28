@@ -209,13 +209,17 @@ def donthitwalls(me, width, height):
     head = me[0]
 
     if head['x'] == 0:
-        directions.remove('left')
+        if 'left' in directions:
+            directions.remove('left')
     if head['x'] == width-1:
-        directions.remove('right')
+        if 'right' in directions:
+            directions.remove('right')
     if head['y'] == 0:
-        directions.remove('up')
+        if 'up' in directions:
+            directions.remove('up')
     if head['y'] == height-1:
-        directions.remove('down')
+        if 'down' in directions:
+            directions.remove('down')
 
 
 def avoidheadtohead(head, mylength, snakes):
