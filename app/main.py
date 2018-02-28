@@ -251,7 +251,8 @@ def getadjpoints(point):
     superduperpoint = point
     print('Point: ')
     print(superduperpoint)
-    left = getleft(superduperpoint)
+    left = superduperpoint
+    left = left['x']-1
     print('returned as: ')
     print(left)
     right = getright(superduperpoint)
