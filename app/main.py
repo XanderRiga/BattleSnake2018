@@ -376,22 +376,22 @@ def isadjacentdiagonal(a, b):
 
 
 def getleft(point):
-    point['x'] -= 1
+    point['x'] = point['x']-1
     return point
 
 
 def getright(point):
-    point['x'] += 1
+    point['x'] = point['x']+1
     return point
 
 
 def getup(point):
-    point['y'] -= 1
+    point['y'] = point['y']-1
     return point
 
 
 def getdown(point):
-    point['y'] += 1
+    point['y'] = point['y']+1
     return point
 
 
