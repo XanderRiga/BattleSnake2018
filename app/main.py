@@ -49,10 +49,11 @@ def move():
     snakes = data['snakes']
     height = data['height']
     width = data['width']
-    # food = data['food']
+    food = data['food']
 
     me = data['you']['body']['data']
     mylength = data['you']['length']
+    myhealth = data['you']['health']
 
     donthitsnakes(me[0], snakes)
     donthitwalls(me, width, height)
@@ -108,8 +109,18 @@ def move():
             directions.remove('down')
             print('removing down, size: ' + str(downsize))
 
+    fooddir = []
+    if myhealth < 50:
+        closestfood = findclosestfood(me, food)
+        fooddir = dirtopoint(me, closestfood)
+
     if directions:
         direction = random.choice(directions)
+        if fooddir:
+            for x in fooddir:
+                if x in directions:
+                    direction = x
+                    break
     else:
         print('Goodbye cruel world')
         taunt = 'MICHAEL!!!!!!'
@@ -124,32 +135,31 @@ def move():
 #
 # KENDRAS CODE
 
-def eat(me, foodpoint):
-    """find fastest direction to food"""
+def dirtopoint(me, foodpoint):
+    """Returns array of directions to foodpoint"""
     global directions
     head = me[0]
     xdiff = abs(head['x'] - foodpoint['x'])
     ydiff = abs(head['y'] - foodpoint['y'])
 
+    newlist = []
     if xdiff >= ydiff and head['x'] - foodpoint['x'] >= 0:
-        if 'left' in directions:
-            return 'left'
+        newlist.append('left')
 
     if xdiff >= ydiff and head['x'] - foodpoint['x'] < 0:
-        if 'right' in directions:
-            return 'right'
+        newlist.append('right')
 
     if xdiff < ydiff and head['y'] - foodpoint['y'] >= 0:
-        if 'up' in directions:
-            return 'up'
+        newlist.append('up')
 
     if xdiff < ydiff and head['y'] - foodpoint['y'] < 0:
-        if 'down' in directions:
-            return 'down'
+        newlist.append('down')
+
+    return newlist
 
 
 def findclosestfood(me, food):
-    """Returns coords of food piece that is closest to snake"""
+    """Returns point of food piece that is closest to snake"""
     head = me[0]
     distance = findpointdistance(head, food['data'][0])
     closestfood = food['data'][0]
