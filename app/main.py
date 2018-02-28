@@ -71,15 +71,19 @@ def move():
         leftsize = rightsize = upsize = downsize = 0
         for dir in directions:
             if dir == 'left':
+                print('flood fill on left')
                 floodfill(board, headx-1, heady, width, height, leftlist)
                 leftsize = len(leftlist)
             if dir == 'right':
+                print('flood fill on right')
                 floodfill(board, headx+1, heady, width, height, rightlist)
                 rightsize = len(rightlist)
             if dir == 'up':
+                print('flood fill on up')
                 floodfill(board, headx, heady-1, width, height, uplist)
                 upsize = len(uplist)
             if dir == 'down':
+                print('flood fill on down')
                 floodfill(board, headx, heady+1, width, height, downlist)
                 downsize = len(downlist)
 
