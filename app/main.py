@@ -54,6 +54,7 @@ def move():
     donthitsnakes(me[0], snakes)
     donthitwalls(me, width, height)
     donthittail(me)
+    avoidheadtohead(me[0], snakes)
 
     if len(directions) == 2 or diagonaldanger(me, snakes):
         board = buildboard(me, snakes, width, height)
