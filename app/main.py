@@ -2,6 +2,7 @@ import bottle
 import os
 import random
 import copy
+import math
 
 directions = ['up', 'down', 'left', 'right']
 
@@ -48,10 +49,11 @@ def move():
     snakes = data['snakes']
     height = data['height']
     width = data['width']
-    # food = data['food']
+    food = data['food']
 
     me = data['you']['body']['data']
     mylength = data['you']['length']
+    myhealth = data['you']['health']
 
     donthitsnakes(me[0], snakes)
     donthitwalls(me, width, height)
@@ -107,8 +109,18 @@ def move():
             directions.remove('down')
             print('removing down, size: ' + str(downsize))
 
+    fooddir = []
+    if myhealth < 50:
+        closestfood = findclosestfood(me, food)
+        fooddir = dirtopoint(me, closestfood)
+
     if directions:
         direction = random.choice(directions)
+        if fooddir:
+            for x in fooddir:
+                if x in directions:
+                    direction = x
+                    break
     else:
         print('Goodbye cruel world')
         taunt = 'MICHAEL!!!!!!'
@@ -118,6 +130,69 @@ def move():
         'move': direction,
         'taunt': taunt
     }
+
+
+#
+# KENDRAS CODE
+
+def dirtopoint(me, foodpoint):
+    """Returns array of directions to foodpoint"""
+    global directions
+    head = me[0]
+    xdiff = abs(head['x'] - foodpoint['x'])
+    ydiff = abs(head['y'] - foodpoint['y'])
+
+    newlist = []
+    if xdiff >= ydiff and head['x'] - foodpoint['x'] >= 0:
+        newlist.append('left')
+
+    if xdiff >= ydiff and head['x'] - foodpoint['x'] < 0:
+        newlist.append('right')
+
+    if xdiff < ydiff and head['y'] - foodpoint['y'] >= 0:
+        newlist.append('up')
+
+    if xdiff < ydiff and head['y'] - foodpoint['y'] < 0:
+        newlist.append('down')
+
+    return newlist
+
+
+def findclosestfood(me, food):
+    """Returns point of food piece that is closest to snake"""
+    head = me[0]
+    distance = findpointdistance(head, food['data'][0])
+    closestfood = food['data'][0]
+
+    for pieceoffood in food['data']:
+        if findpointdistance(head, pieceoffood) < distance:
+            closestfood = pieceoffood
+            distance = findpointdistance(head, pieceoffood)
+
+    return closestfood
+
+
+def findpointdistance(a, b):
+    """Used to find the closest food"""
+
+    xdiff = a['x'] - b['x']
+    ydiff = a['y'] - b['y']
+
+    distance = math.sqrt(xdiff**2 + ydiff**2)
+
+    return distance
+
+
+def closestsnaketofood(me, snakes, food):
+    head = me[0]
+    for pieceoffood in food['data']:
+        for snake in snakes:
+            if findpointdistance(head, pieceoffood) >= findpointdistance(snake['body']['data']['0'], pieceoffood):
+                return False
+    return True
+
+## END KENDRAS CODE
+
 
 
 def printmatrix(matrix):
