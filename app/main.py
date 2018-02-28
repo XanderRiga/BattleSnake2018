@@ -1,6 +1,7 @@
 import bottle
 import os
 import random
+import copy
 
 directions = ['up', 'down', 'left', 'right']
 
@@ -248,21 +249,25 @@ def avoidheadtohead(head, snakes):
 
 def getadjpoints(point):
     """returns point objects of all of the adjacent points of a given point"""
-    superduperpoint = point
+    superduperpoint = copy.deepcopy(point)
     print('Point: ')
     print(superduperpoint)
+
     left = superduperpoint
     left['x'] = left['x']-1
     print('left:')
     print(left)
+
     right = superduperpoint
     right['x'] = right['x']+1
     print('right:')
     print(right)
+
     up = superduperpoint
     up['y'] = up['y']-1
     print('up')
     print(up)
+
     down = superduperpoint
     down['y'] = down['y']+1
     print('down')
