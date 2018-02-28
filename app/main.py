@@ -1,6 +1,7 @@
 import bottle
 import os
 import random
+import copy
 
 directions = ['up', 'down', 'left', 'right']
 
@@ -54,6 +55,7 @@ def move():
     donthitsnakes(me[0], snakes)
     donthitwalls(me, width, height)
     donthittail(me)
+    avoidheadtohead(me[0], snakes)
 
     if len(directions) == 2 or diagonaldanger(me, snakes):
         board = buildboard(me, snakes, width, height)
@@ -214,11 +216,68 @@ def donthitwalls(me, width, height):
     if head['y'] == height-1:
         directions.remove('down')
 
+
+def avoidheadtohead(head, snakes):
+    global directions
+    myadj = getadjpoints(head)
+    print('my adjacent points:')
+    print(myadj)
+
+    othersnakeadj = []
+    for snake in snakes['data']:
+        if snake['body']['data'][0] != head:
+            snakeadjpts = getadjpoints(snake['body']['data'][0])
+            for z in snakeadjpts:
+                othersnakeadj.append(z)
+    print('other snake adj points:')
+    print(othersnakeadj)
+
+    for x in myadj:
+        for y in othersnakeadj:
+            if x == y:
+                dir = findadjacentdir(head, x)
+                if dir and dir in directions:
+                    print('head to head, removing ' + dir)
+                    directions.remove(dir)
+
+
 #
 #
 # Below here are utility functions
 #
 #
+
+
+def getadjpoints(point):
+    """returns point objects of all of the adjacent points of a given point"""
+    superduperpoint = copy.deepcopy(point)
+    # print('Point: ')
+    # print(superduperpoint)
+
+    left = copy.deepcopy(superduperpoint)
+    left['x'] = left['x']-1
+    # print('left:')
+    # print(left)
+
+    right = copy.deepcopy(superduperpoint)
+    right['x'] = right['x']+1
+    # print('right:')
+    # print(right)
+
+    up = copy.deepcopy(superduperpoint)
+    up['y'] = up['y']-1
+    # print('up')
+    # print(up)
+
+    down = copy.deepcopy(superduperpoint)
+    down['y'] = down['y']+1
+    # print('down')
+    # print(down)
+
+    points = [left, right, up, down]
+    # print(points)
+    return points
+
 
 def isdiagonal(a, b):
     ax = a["x"]
@@ -343,23 +402,27 @@ def isadjacentdiagonal(a, b):
 
 
 def getleft(point):
-    point['x'] -= 1
-    return point
+    newpoint = point
+    newpoint['x'] = point['x']-1
+    return newpoint
 
 
 def getright(point):
-    point['x'] += 1
-    return point
+    newpoint = point
+    newpoint['x'] = point['x']+1
+    return newpoint
 
 
 def getup(point):
-    point['y'] -= 1
-    return point
+    newpoint = point
+    newpoint['y'] = point['y']-1
+    return newpoint
 
 
 def getdown(point):
-    point['y'] += 1
-    return point
+    newpoint = point
+    newpoint['y'] = point['y']+1
+    return newpoint
 
 
 # Expose WSGI app (so gunicorn can find it)
