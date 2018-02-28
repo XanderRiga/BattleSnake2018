@@ -253,11 +253,20 @@ def getadjpoints(point):
     print(superduperpoint)
     left = superduperpoint
     left['x'] = left['x']-1
-    print('returned as: ')
+    print('left:')
     print(left)
-    right = getright(superduperpoint)
-    up = getup(superduperpoint)
-    down = getdown(superduperpoint)
+    right = superduperpoint
+    right['x'] = right['x']+1
+    print('right:')
+    print(right)
+    up = superduperpoint
+    up['y'] = up['y']-1
+    print('up')
+    print(up)
+    down = superduperpoint
+    down['y'] = down['y']+1
+    print('down')
+    print(down)
 
     points = [left, right, up, down]
     print(points)
@@ -387,12 +396,8 @@ def isadjacentdiagonal(a, b):
 
 
 def getleft(point):
-    print('getting left of: ')
-    print(point)
     newpoint = point
     newpoint['x'] = point['x']-1
-    print('the left point is: ')
-    print(newpoint)
     return newpoint
 
 
