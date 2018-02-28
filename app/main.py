@@ -250,31 +250,31 @@ def avoidheadtohead(head, snakes):
 def getadjpoints(point):
     """returns point objects of all of the adjacent points of a given point"""
     superduperpoint = copy.deepcopy(point)
-    print('Point: ')
-    print(superduperpoint)
+    # print('Point: ')
+    # print(superduperpoint)
 
     left = copy.deepcopy(superduperpoint)
     left['x'] = left['x']-1
-    print('left:')
-    print(left)
+    # print('left:')
+    # print(left)
 
     right = copy.deepcopy(superduperpoint)
     right['x'] = right['x']+1
-    print('right:')
-    print(right)
+    # print('right:')
+    # print(right)
 
     up = copy.deepcopy(superduperpoint)
     up['y'] = up['y']-1
-    print('up')
-    print(up)
+    # print('up')
+    # print(up)
 
     down = copy.deepcopy(superduperpoint)
     down['y'] = down['y']+1
-    print('down')
-    print(down)
+    # print('down')
+    # print(down)
 
     points = [left, right, up, down]
-    print(points)
+    # print(points)
     return points
 
 
