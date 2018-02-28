@@ -225,7 +225,9 @@ def avoidheadtohead(head, snakes):
     othersnakeadj = []
     for snake in snakes['data']:
         if snake['body']['data'][0] != head:
-            othersnakeadj.append(getadjpoints(snake['body']['data'][0]))
+            snakeadjpts = getadjpoints(snake['body']['data'][0])
+            for z in snakeadjpts:
+                othersnakeadj.append(z)
     print('other snake adj points:')
     print(othersnakeadj)
 
@@ -251,6 +253,8 @@ def getadjpoints(point):
     left = getleft(point)
     print('returned as: ')
     print(left)
+    pts = [left]
+    print(pts)
     right = getright(point)
     up = getup(point)
     down = getdown(point)
