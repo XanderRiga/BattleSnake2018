@@ -376,27 +376,27 @@ def isadjacentdiagonal(a, b):
 
 
 def getleft(point):
-    print('point before shift')
-    print(point)
-    point['x'] = point['x']-1
-    print('point to left')
-    print(point)
-    return point
+    newpoint = point
+    newpoint['x'] = point['x']-1
+    return newpoint
 
 
 def getright(point):
-    point['x'] = point['x']+1
+    newpoint = point
+    newpoint['x'] = point['x']+1
     return point
 
 
 def getup(point):
-    point['y'] = point['y']-1
-    return point
+    newpoint = point
+    newpoint['y'] = point['y']-1
+    return newpoint
 
 
 def getdown(point):
-    point['y'] = point['y']+1
-    return point
+    newpoint = point
+    newpoint['y'] = point['y']+1
+    return newpoint
 
 
 # Expose WSGI app (so gunicorn can find it)
