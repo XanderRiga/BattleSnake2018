@@ -255,9 +255,12 @@ def getadjpoints(point):
     print(left)
     pts = [left]
     print(pts)
-    right = getright(point)
-    up = getup(point)
-    down = getdown(point)
+    # right = getright(point)
+    # up = getup(point)
+    # down = getdown(point)
+    right = 1
+    up = 2
+    down = 3
 
     points = [left, right, up, down]
     print(points)
