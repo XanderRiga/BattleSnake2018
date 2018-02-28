@@ -237,7 +237,6 @@ def avoidheadtohead(head, snakes):
                 directions.remove(dir)
 
 
-
 #
 #
 # Below here are utility functions
@@ -247,13 +246,13 @@ def avoidheadtohead(head, snakes):
 
 def getadjpoints(point):
     """returns point objects of all of the adjacent points of a given point"""
-    points = []
-    print(getleft(point))
-    print(getright(point))
-    points.append(getleft(point))
-    points.append(getright(point))
-    points.append(getup(point))
-    points.append(getdown(point))
+    left = getleft(point)
+    right = getright(point)
+    up = getup(point)
+    down = getdown(point)
+
+    points = [left, right, up, down]
+    print(points)
     return points
 
 
@@ -388,7 +387,7 @@ def getleft(point):
 def getright(point):
     newpoint = point
     newpoint['x'] = point['x']+1
-    return point
+    return newpoint
 
 
 def getup(point):
