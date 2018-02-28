@@ -218,18 +218,34 @@ def headtoheaddanger(head, snakes):
     for snake in snakes['data']:
         if snake['body']['data'][0] != head and snake['body']['data'][0] in leftpoints:
             print('removing left for head to head danger')
+            print('head:')
+            print(head)
+            print('snake head:')
+            print(snake['body']['data'][0])
             directions.remove('left')
     for snake in snakes['data']:
         if not snake['body']['data'][0] != head and snake['body']['data'][0] in rightpoints:
             print('removing right for head to head danger')
+            print('head:')
+            print(head)
+            print('snake head:')
+            print(snake['body']['data'][0])
             directions.remove('right')
     for snake in snakes['data']:
         if not snake['body']['data'][0] != head and snake['body']['data'][0] in uppoints:
             print('removing up for head to head danger')
+            print('head:')
+            print(head)
+            print('snake head:')
+            print(snake['body']['data'][0])
             directions.remove('up')
     for snake in snakes['data']:
         if not snake['body']['data'][0] != head and snake['body']['data'][0] in downpoints:
             print('removing down for head to head danger')
+            print('head:')
+            print(head)
+            print('snake head:')
+            print(snake['body']['data'][0])
             directions.remove('down')
 
 
