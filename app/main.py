@@ -234,10 +234,11 @@ def avoidheadtohead(head, snakes):
 
     for x in myadj:
         for y in othersnakeadj:
-            dir = findadjacentdir(x, y)
-            if dir and dir in directions:
-                print('head to head, removing ' + dir)
-                directions.remove(dir)
+            if x == y:
+                dir = findadjacentdir(head, x)
+                if dir and dir in directions:
+                    print('head to head, removing ' + dir)
+                    directions.remove(dir)
 
 
 #
