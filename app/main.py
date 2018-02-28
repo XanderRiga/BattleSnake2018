@@ -215,21 +215,20 @@ def headtoheaddanger(head, snakes):
         if direction == 'down':
             downpoints = getadjpoints(getdown(head))
 
-    print(snakes)
     for snake in snakes['data']:
-        if snake['body']['data'][0] in leftpoints:
+        if not snake['body']['data'] == head and snake['body']['data'][0] in leftpoints:
             print('removing left for head to head danger')
             directions.remove('left')
     for snake in snakes['data']:
-        if snake['body']['data'][0] in rightpoints:
+        if not snake['body']['data'] == head and snake['body']['data'][0] in rightpoints:
             print('removing right for head to head danger')
             directions.remove('right')
     for snake in snakes['data']:
-        if snake['body']['data'][0] in uppoints:
+        if not snake['body']['data'] == head and snake['body']['data'][0] in uppoints:
             print('removing up for head to head danger')
             directions.remove('up')
     for snake in snakes['data']:
-        if snake['body']['data'][0] in downpoints:
+        if not snake['body']['data'] == head and snake['body']['data'][0] in downpoints:
             print('removing down for head to head danger')
             directions.remove('down')
 
