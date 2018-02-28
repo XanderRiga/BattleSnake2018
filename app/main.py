@@ -214,11 +214,41 @@ def donthitwalls(me, width, height):
     if head['y'] == height-1:
         directions.remove('down')
 
+
+def avoidheadtohead(head, snakes):
+    global directions
+    myadj = getadjpoints(head)
+
+    othersnakeadj = []
+    for snake in snakes['data']:
+        if snake['body']['data'][0] != head:
+            othersnakeadj.append(getadjpoints(snake['body']['data'][0]))
+
+    for x in myadj:
+        for y in othersnakeadj:
+            dir = findadjacentdir(x, y)
+            if dir and dir in directions:
+                print('head to head, removing ' + dir)
+                directions.remove(dir)
+
+
+
 #
 #
 # Below here are utility functions
 #
 #
+
+
+def getadjpoints(point):
+    """returns point objects of all of the adjacent points of a given point"""
+    points = []
+    points.append(getleft(point))
+    points.append(getright(point))
+    points.append(getup(point))
+    points.append(getdown(point))
+    return points
+
 
 def isdiagonal(a, b):
     ax = a["x"]
