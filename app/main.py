@@ -219,12 +219,14 @@ def donthitwalls(me, width, height):
 def avoidheadtohead(head, snakes):
     global directions
     myadj = getadjpoints(head)
+    print('my adjacent points:')
     print(myadj)
 
     othersnakeadj = []
     for snake in snakes['data']:
         if snake['body']['data'][0] != head:
             othersnakeadj.append(getadjpoints(snake['body']['data'][0]))
+    print('other snake adj points:')
     print(othersnakeadj)
 
     for x in myadj:
@@ -246,6 +248,8 @@ def avoidheadtohead(head, snakes):
 def getadjpoints(point):
     """returns point objects of all of the adjacent points of a given point"""
     points = []
+    print(getleft(point))
+    print(getright(point))
     points.append(getleft(point))
     points.append(getright(point))
     points.append(getup(point))
