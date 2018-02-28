@@ -2,6 +2,7 @@ import bottle
 import os
 import random
 import copy
+import math
 
 directions = ['up', 'down', 'left', 'right']
 
@@ -118,6 +119,70 @@ def move():
         'move': direction,
         'taunt': taunt
     }
+
+
+#
+# KENDRAS CODE
+
+def eat(me, foodpoint):
+    """find fastest direction to food"""
+    global directions
+    head = me[0]
+    xdiff = abs(head['x'] - foodpoint['x'])
+    ydiff = abs(head['y'] - foodpoint['y'])
+
+    if xdiff >= ydiff and head['x'] - foodpoint['x'] >= 0:
+        if 'left' in directions:
+            return 'left'
+
+    if xdiff >= ydiff and head['x'] - foodpoint['x'] < 0:
+        if 'right' in directions:
+            return 'right'
+
+    if xdiff < ydiff and head['y'] - foodpoint['y'] >= 0:
+        if 'up' in directions:
+            return 'up'
+
+    if xdiff < ydiff and head['y'] - foodpoint['y'] < 0:
+        if 'down' in directions:
+            return 'down'
+
+
+def findclosestfood(me, food):
+    """Returns coords of food piece that is closest to snake"""
+    head = me[0]
+    distance = findpointdistance(head, food['data'][0])
+    closestfood = food['data'][0]
+
+    for pieceoffood in food['data']:
+        if findpointdistance(head, pieceoffood) < distance:
+            closestfood = pieceoffood
+            distance = findpointdistance(head, pieceoffood)
+
+    return closestfood
+
+
+def findpointdistance(a, b):
+    """Used to find the closest food"""
+
+    xdiff = a['x'] - b['x']
+    ydiff = a['y'] - b['y']
+
+    distance = math.sqrt(xdiff**2 + ydiff**2)
+
+    return distance
+
+
+def closestsnaketofood(me, snakes, food):
+    head = me[0]
+    for pieceoffood in food['data']:
+        for snake in snakes:
+            if findpointdistance(head, pieceoffood) >= findpointdistance(snake['body']['data']['0'], pieceoffood):
+                return False
+    return True
+
+## END KENDRAS CODE
+
 
 
 def printmatrix(matrix):
