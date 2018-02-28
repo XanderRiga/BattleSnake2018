@@ -246,7 +246,11 @@ def avoidheadtohead(head, snakes):
 
 def getadjpoints(point):
     """returns point objects of all of the adjacent points of a given point"""
+    print('Point: ')
+    print(point)
     left = getleft(point)
+    print('returned as: ')
+    print(left)
     right = getright(point)
     up = getup(point)
     down = getdown(point)
@@ -379,8 +383,12 @@ def isadjacentdiagonal(a, b):
 
 
 def getleft(point):
+    print('getting left of: ')
+    print(point)
     newpoint = point
     newpoint['x'] = point['x']-1
+    print('the left point is: ')
+    print(newpoint)
     return newpoint
 
 
