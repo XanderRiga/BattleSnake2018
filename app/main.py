@@ -253,22 +253,22 @@ def getadjpoints(point):
     print('Point: ')
     print(superduperpoint)
 
-    left = superduperpoint
+    left = copy.deepcopy(superduperpoint)
     left['x'] = left['x']-1
     print('left:')
     print(left)
 
-    right = superduperpoint
+    right = copy.deepcopy(superduperpoint)
     right['x'] = right['x']+1
     print('right:')
     print(right)
 
-    up = superduperpoint
+    up = copy.deepcopy(superduperpoint)
     up['y'] = up['y']-1
     print('up')
     print(up)
 
-    down = superduperpoint
+    down = copy.deepcopy(superduperpoint)
     down['y'] = down['y']+1
     print('down')
     print(down)
