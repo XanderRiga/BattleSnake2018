@@ -376,7 +376,11 @@ def isadjacentdiagonal(a, b):
 
 
 def getleft(point):
+    print('point before shift')
+    print(point)
     point['x'] = point['x']-1
+    print('point to left')
+    print(point)
     return point
 
 
