@@ -54,6 +54,7 @@ def move():
     donthitsnakes(me[0], snakes)
     donthitwalls(me, width, height)
     donthittail(me)
+    headtoheaddanger(me[0], snakes)
 
     if len(directions) == 2 or diagonaldanger(me, snakes):
         board = buildboard(me, snakes, width, height)
@@ -160,19 +161,6 @@ def buildboard(me, snakes, width, height):
     return matrix
 
 
-# # TODO This is still picking up non dangerous things as danger, and the diagonal stuff isn't working
-# def adjacenttodanger(point, me, snakes, width, height):
-#     """Checks if point is adjacent to snakes, edge of board, or itself(not neck/head) including diagonally"""
-#     if istouchingwall(point, width, height):
-#         print('touching wall')
-#         return True
-#     if istouchingsnake(point, me, snakes):
-#         print('touching snake')
-#         return True
-#     if istouchingself(point, me):
-#         print('touching self')
-#         return True
-
 def donthitsnakes(head, snakes):
     """goes through entire snake array and stops it from directly hitting any snakes"""
     global directions
@@ -208,6 +196,43 @@ def donthitwalls(me, width, height):
         directions.remove('up')
     if head['y'] == height-1:
         directions.remove('down')
+
+
+def headtoheaddanger(head, snakes):
+    """will remove spaces if it will potentially go head to head with a bigger snake"""
+    global directions
+    leftpoints = []
+    rightpoints = []
+    uppoints = []
+    downpoints = []
+    for direction in directions:
+        if direction == 'left':
+            leftpoints = getadjpoints(getleft(head))
+        if direction == 'right':
+            rightpoints = getadjpoints(getright(head))
+        if direction == 'up':
+            uppoints = getadjpoints(getup(head))
+        if direction == 'down':
+            downpoints = getadjpoints(getdown(head))
+
+    for snake in snakes['data']:
+        if snake['body']['data'][0] in leftpoints:
+            print('removing left for head to head danger')
+            directions.remove('left')
+    for snake in snakes['data']:
+        if snake['body']['data'][0] in rightpoints:
+            print('removing right for head to head danger')
+            directions.remove('right')
+    for snake in snakes['data']:
+        if snake['body']['data'][0] in uppoints:
+            print('removing up for head to head danger')
+            directions.remove('up')
+    for snake in snakes['data']:
+        if snake['body']['data'][0] in downpoints:
+            print('removing down for head to head danger')
+            directions.remove('down')
+
+
 
 #
 #
@@ -296,6 +321,16 @@ def dirtouchingwall(point, width, height):
         walls.append('down')
 
     return walls
+
+
+def getadjpoints(point):
+    """returns point objects of all of the adjacent points of a given point"""
+    points = []
+    points.append(getleft(point))
+    points.append(getright(point))
+    points.append(getup(point))
+    points.append(getdown(point))
+    return points
 
 
 def findadjacentdir(a, b):
