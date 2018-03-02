@@ -135,6 +135,8 @@ def move():
         taunt = 'MICHAEL!!!!!!'
         direction = 'up'
         safest = 0
+        print('We are in danger, here is the danger dict:')
+        print(danger)
         for key, value in danger.items():
             if value > safest:
                 safest = value
