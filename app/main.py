@@ -5,6 +5,7 @@ import copy
 import math
 
 directions = ['up', 'down', 'left', 'right']
+danger = {}
 
 
 @bottle.route('/')
@@ -42,6 +43,7 @@ def start():
 @bottle.post('/move')
 def move():
     global directions
+    global danger
     directions = ['up', 'down', 'left', 'right']
     taunt = 'Bears, Beets, Battlestar Galactica'
     data = bottle.request.json
@@ -97,15 +99,23 @@ def move():
         # print(upsize)
         # print(downsize)
         if leftlist and leftsize < len(me) + 2 and 'left' in directions:
+            if 'left' not in danger.keys() or ('left' in danger.keys() and danger['left'] < leftsize):
+                danger['left'] = leftsize
             directions.remove('left')
             print('removing left, size: ' + str(leftsize))
         if rightlist and rightsize < len(me) + 2 and 'right' in directions:
+            if 'right' not in danger.keys() or ('right' in danger.keys() and danger['right'] < rightsize):
+                danger['right'] = rightsize
             directions.remove('right')
             print('removing right, size: ' + str(rightsize))
         if uplist and upsize < len(me) + 2 and 'up' in directions:
+            if 'up' not in danger.keys() or ('up' in danger.keys() and danger['up'] < upsize):
+                danger['up'] = upsize
             directions.remove('up')
             print('removing up, size: ' + str(upsize))
         if downlist and downsize < len(me) + 2 and 'down' in directions:
+            if 'down' not in danger.keys() or ('down' in danger.keys() and danger['down'] < downsize):
+                danger['down'] = downsize
             directions.remove('down')
             print('removing down, size: ' + str(downsize))
 
@@ -122,9 +132,13 @@ def move():
                     direction = x
                     break
     else:
-        print('Goodbye cruel world')
         taunt = 'MICHAEL!!!!!!'
         direction = 'up'
+        safest = 0
+        for key, value in danger.items():
+            if value > safest:
+                safest = value
+                direction = key
 
     return {
         'move': direction,
@@ -299,6 +313,7 @@ def donthitwalls(me, width, height):
 
 def avoidheadtohead(head, mylength, snakes):
     global directions
+    global danger
     myadj = getadjpoints(head)
 
     othersnakeadj = []
@@ -312,6 +327,8 @@ def avoidheadtohead(head, mylength, snakes):
         for y in othersnakeadj:
             if x == y:
                 dir = findadjacentdir(head, x)
+                if dir not in danger:
+                    danger[dir] = mylength+1
                 if dir and dir in directions:
                     print('head to head, removing ' + dir)
                     directions.remove(dir)
