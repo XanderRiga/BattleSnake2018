@@ -114,24 +114,31 @@ def move():
         # print(upsize)
         # print(downsize)
         if leftlist and leftsize < len(me) + 2 and 'left' in directions:
+            directions.remove('left')
+        if leftlist and leftsize < len(me) + 2:
             if 'left' not in danger.keys() or ('left' in danger.keys() and danger['left'] < leftsize):
                 danger['left'] = leftsize
-            directions.remove('left')
             # print('removing left, size: ' + str(leftsize))
+          
         if rightlist and rightsize < len(me) + 2 and 'right' in directions:
+            directions.remove('right')
+        if rightlist and rightsize < len(me) + 2:
             if 'right' not in danger.keys() or ('right' in danger.keys() and danger['right'] < rightsize):
                 danger['right'] = rightsize
-            directions.remove('right')
             # print('removing right, size: ' + str(rightsize))
+          
         if uplist and upsize < len(me) + 2 and 'up' in directions:
+            directions.remove('up')
+        if uplist and upsize < len(me) + 2:
             if 'up' not in danger.keys() or ('up' in danger.keys() and danger['up'] < upsize):
                 danger['up'] = upsize
-            directions.remove('up')
             # print('removing up, size: ' + str(upsize))
+          
         if downlist and downsize < len(me) + 2 and 'down' in directions:
+            directions.remove('down')
+        if downlist and downsize < len(me) + 2:
             if 'down' not in danger.keys() or ('down' in danger.keys() and danger['down'] < downsize):
                 danger['down'] = downsize
-            directions.remove('down')
             # print('removing down, size: ' + str(downsize))
 
     fooddir = []
@@ -161,6 +168,7 @@ def move():
                 direction = key
 
     instadeath = []
+    danger = {}
     return {
         'move': direction,
         'taunt': taunt
@@ -365,7 +373,7 @@ def avoidheadtohead(head, mylength, snakes):
         for y in othersnakeadj:
             if x == y:
                 dir = findadjacentdir(head, x)
-                if dir not in danger:
+                if dir and dir not in danger:
                     # print('adding ' + str(dir) + 'to danger array with value ' + str(mylength+1))
                     danger[dir] = mylength+1
                 if dir and dir in directions:
