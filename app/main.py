@@ -13,8 +13,8 @@ quotes = [
     'The eyes are the groin of the head',
     'In an ideal world I would have all ten fingers on my left hand and the right one would just be left for punching',
     'Bears, Beets, Battlestar Galactica',
-    'I am fast. To give you a reference point I am somewhere between a snake and a mongoose… And a panther',
-    'D.W.I.G.H.T – Determined, Worker, Intense, Good worker, Hard worker, Terrific',
+    'I am fast. To give you a reference point I am somewhere between a snake and a mongoose... And a panther',
+    'D.W.I.G.H.T - Determined, Worker, Intense, Good worker, Hard worker, Terrific',
     'Through concentration, I can raise and lower my cholesterol at will'
 ]
 
