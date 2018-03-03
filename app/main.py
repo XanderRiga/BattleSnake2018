@@ -78,6 +78,7 @@ def move():
     avoidheadtohead(me[0], mylength, snakes)
 
     if len(directions) == 2 or diagonaldanger(me, snakes):
+        print('doing flood fill checks')
         board = buildboard(me, snakes, width, height)
         zeros = countmatrix0(board)
         # print('zeros: ' + str(zeros))
@@ -109,10 +110,10 @@ def move():
                 floodfill(board, headx, heady+1, width, height, downlist)
                 downsize = len(downlist)
 
-        # print(leftsize)
-        # print(rightsize)
-        # print(upsize)
-        # print(downsize)
+        print(leftsize)
+        print(rightsize)
+        print(upsize)
+        print(downsize)
         if leftlist and leftsize < len(me) + 2 and 'left' in directions:
             if 'left' not in danger.keys() or ('left' in danger.keys() and danger['left'] < leftsize):
                 danger['left'] = leftsize
