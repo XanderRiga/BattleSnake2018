@@ -62,7 +62,8 @@ def move():
 
     directions = ['up', 'down', 'left', 'right']
     danger = {}
-    isntadeath = []
+    instadeath = []
+
     data = bottle.request.json
 
     snakes = data['snakes']
