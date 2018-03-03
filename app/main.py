@@ -336,7 +336,7 @@ def avoidheadtohead(head, mylength, snakes):
             if x == y:
                 dir = findadjacentdir(head, x)
                 if dir not in danger:
-                    print('adding ' + dir + 'to danger array with value ' + mylength+1)
+                    print('adding ' + str(dir) + 'to danger array with value ' + str(mylength+1))
                     danger[dir] = mylength+1
                 if dir and dir in directions:
                     print('head to head, removing ' + dir)
