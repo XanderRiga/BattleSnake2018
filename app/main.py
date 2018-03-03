@@ -164,7 +164,7 @@ def move():
         fooddir = dirtopoint(me, closestfood)
 
     taunt = 'D.W.I.G.H.T - Determined, Worker, Intense, Good worker, Hard worker, Terrific'
-    if directions and danger:
+    if directions and len(danger) == 2:
         currsafest = 0
         currdirection = None
         for key, value in danger.items():
