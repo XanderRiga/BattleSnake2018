@@ -37,6 +37,8 @@ def start():
     board_width = data.get('width')
     board_height = data.get('height')
 
+    taunt = 'D.W.I.G.H.T - Determined, Worker, Intense, Good worker, Hard worker, Terrific'
+
     head_url = '%s://%s/static/dwight.png' % (
         bottle.request.urlparts.scheme,
         bottle.request.urlparts.netloc
@@ -46,7 +48,7 @@ def start():
         'color': '#ffcc00',
         'head_url': head_url,
         'name': 'Dwight Snake',
-        'taunt': quotes[0],
+        'taunt': taunt,
         'head_type': 'safe',
         'tail_type': 'round-bum'
     }
@@ -57,8 +59,6 @@ def move():
     global directions
     global danger
     global instadeath
-    global quotes
-    global taunt
 
     directions = ['up', 'down', 'left', 'right']
     data = bottle.request.json
@@ -139,12 +139,7 @@ def move():
         closestfood = findclosestfood(me, food)
         fooddir = dirtopoint(me, closestfood)
 
-    turn = data['turn']
-    if turn % 15 == 0:
-        taunt = random.choice(quotes)
-        print('updated to taunt:')
-        print(taunt)
-
+    taunt = 'D.W.I.G.H.T - Determined, Worker, Intense, Good worker, Hard worker, Terrific'
     if directions:
         direction = random.choice(directions)
         if fooddir:
