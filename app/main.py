@@ -5,7 +5,7 @@ import copy
 import math
 
 directions = ['up', 'down', 'left', 'right']
-isntadeath = []
+instadeath = []
 danger = {}
 
 
