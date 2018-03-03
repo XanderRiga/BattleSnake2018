@@ -61,6 +61,9 @@ def move():
     global instadeath
 
     directions = ['up', 'down', 'left', 'right']
+    danger = {}
+    instadeath = []
+
     data = bottle.request.json
 
     snakes = data['snakes']
@@ -78,6 +81,7 @@ def move():
     avoidheadtohead(me[0], mylength, snakes)
 
     if len(directions) == 2 or diagonaldanger(me, snakes):
+        print('doing flood fill checks')
         board = buildboard(me, snakes, width, height)
         zeros = countmatrix0(board)
         # print('zeros: ' + str(zeros))
@@ -109,10 +113,10 @@ def move():
                 floodfill(board, headx, heady+1, width, height, downlist)
                 downsize = len(downlist)
 
-        # print(leftsize)
-        # print(rightsize)
-        # print(upsize)
-        # print(downsize)
+        print(leftsize)
+        print(rightsize)
+        print(upsize)
+        print(downsize)
         if leftlist and leftsize < len(me) + 2 and 'left' in directions:
             if 'left' not in danger.keys() or ('left' in danger.keys() and danger['left'] < leftsize):
                 danger['left'] = leftsize
@@ -134,6 +138,8 @@ def move():
             directions.remove('down')
             # print('removing down, size: ' + str(downsize))
 
+    print(danger)
+    print(instadeath)
     fooddir = []
     if myhealth < 80:
         closestfood = findclosestfood(me, food)
@@ -160,7 +166,6 @@ def move():
                 safest = value
                 direction = key
 
-    instadeath = []
     return {
         'move': direction,
         'taunt': taunt
@@ -430,10 +435,12 @@ def diagonaldanger(me, snakes):
     for snake in snakes['data']:
         for bodypart in snake['body']['data']:
             if isdiagonal(head, bodypart):
+                print('There is danger diagonally')
                 return True
 
     for point in me[:-1]:
         if isdiagonal(head, point):
+            print('There is danger diagonally')
             return True
 
     return False
