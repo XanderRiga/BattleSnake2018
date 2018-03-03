@@ -61,6 +61,8 @@ def move():
     global instadeath
 
     directions = ['up', 'down', 'left', 'right']
+    danger = {}
+    isntadeath = []
     data = bottle.request.json
 
     snakes = data['snakes']
@@ -162,7 +164,6 @@ def move():
                 safest = value
                 direction = key
 
-    instadeath = []
     return {
         'move': direction,
         'taunt': taunt
