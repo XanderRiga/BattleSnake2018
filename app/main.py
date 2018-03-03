@@ -105,22 +105,22 @@ def move():
             if 'left' not in danger.keys() or ('left' in danger.keys() and danger['left'] < leftsize):
                 danger['left'] = leftsize
             directions.remove('left')
-            print('removing left, size: ' + str(leftsize))
+            # print('removing left, size: ' + str(leftsize))
         if rightlist and rightsize < len(me) + 2 and 'right' in directions:
             if 'right' not in danger.keys() or ('right' in danger.keys() and danger['right'] < rightsize):
                 danger['right'] = rightsize
             directions.remove('right')
-            print('removing right, size: ' + str(rightsize))
+            # print('removing right, size: ' + str(rightsize))
         if uplist and upsize < len(me) + 2 and 'up' in directions:
             if 'up' not in danger.keys() or ('up' in danger.keys() and danger['up'] < upsize):
                 danger['up'] = upsize
             directions.remove('up')
-            print('removing up, size: ' + str(upsize))
+            # print('removing up, size: ' + str(upsize))
         if downlist and downsize < len(me) + 2 and 'down' in directions:
             if 'down' not in danger.keys() or ('down' in danger.keys() and danger['down'] < downsize):
                 danger['down'] = downsize
             directions.remove('down')
-            print('removing down, size: ' + str(downsize))
+            # print('removing down, size: ' + str(downsize))
 
     fooddir = []
     if myhealth < 50:
@@ -138,21 +138,21 @@ def move():
         taunt = 'MICHAEL!!!!!!'
         direction = 'up'
         safest = 0
-        print('We are in danger, here is the direction dict:')
-        print(directions)
-        print('We are in danger, here is the danger dict:')
-        print(danger)
+        # print('We are in danger, here is the direction dict:')
+        # print(directions)
+        # print('We are in danger, here is the danger dict:')
+        # print(danger)
         for key, value in danger.items():
             if value > safest and key not in instadeath:
                 safest = value
                 direction = key
 
-    print('Legal Moves')
-    print(directions)
-    print('Danger Moves')
-    print(danger)
-    print('Insta Death')
-    print(instadeath)
+    # print('Legal Moves')
+    # print(directions)
+    # print('Danger Moves')
+    # print(danger)
+    # print('Insta Death')
+    # print(instadeath)
     instadeath = []
     return {
         'move': direction,
@@ -359,10 +359,10 @@ def avoidheadtohead(head, mylength, snakes):
             if x == y:
                 dir = findadjacentdir(head, x)
                 if dir not in danger:
-                    print('adding ' + str(dir) + 'to danger array with value ' + str(mylength+1))
+                    # print('adding ' + str(dir) + 'to danger array with value ' + str(mylength+1))
                     danger[dir] = mylength+1
                 if dir and dir in directions:
-                    print('head to head, removing ' + dir)
+                    # print('head to head, removing ' + dir)
                     directions.remove(dir)
 
 
