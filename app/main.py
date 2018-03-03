@@ -5,6 +5,7 @@ import copy
 import math
 
 directions = ['up', 'down', 'left', 'right']
+isntadeath = []
 danger = {}
 
 
@@ -44,6 +45,8 @@ def start():
 def move():
     global directions
     global danger
+    global instadeath
+
     directions = ['up', 'down', 'left', 'right']
     taunt = 'Bears, Beets, Battlestar Galactica'
     data = bottle.request.json
@@ -140,7 +143,7 @@ def move():
         print('We are in danger, here is the danger dict:')
         print(danger)
         for key, value in danger.items():
-            if value > safest:
+            if value > safest and key not in instadeath:
                 safest = value
                 direction = key
 
@@ -148,6 +151,8 @@ def move():
     print(directions)
     print('Danger Moves')
     print(danger)
+    print('Insta Death')
+    print(isntadeath)
     return {
         'move': direction,
         'taunt': taunt
@@ -281,42 +286,59 @@ def buildboard(me, snakes, width, height):
 def donthitsnakes(head, snakes):
     """goes through entire snake array and stops it from directly hitting any snakes"""
     global directions
+    global instadeath
 
     for snake in snakes['data']:
         for bodypart in snake['body']['data']:
             adj = findadjacentdir(head, bodypart)
             if adj and adj in directions:
                 directions.remove(adj)
+            if adj not in instadeath:
+                instadeath.append(adj)
 
 
 def donthittail(me):
     """Stops the snake from hitting it's own tail(anything past its head and neck)"""
     global directions
+    global instadeath
+
     head = me[0]
 
     for x in me[:-1]: # it is ok to move where the last point in our tail is
         adj = findadjacentdir(head, x)
         if adj and adj in directions:
             directions.remove(adj)
+        if adj not in instadeath:
+            instadeath.append(adj)
 
 
 def donthitwalls(me, width, height):
     """Stops the snake from hitting any walls"""
     global directions
+    global instadeath
+
     head = me[0]
 
     if head['x'] == 0:
         if 'left' in directions:
             directions.remove('left')
+        if 'left' not in instadeath:
+            instadeath.append('left')
     if head['x'] == width-1:
         if 'right' in directions:
             directions.remove('right')
+        if 'right' not in instadeath:
+            instadeath.append('right')
     if head['y'] == 0:
         if 'up' in directions:
             directions.remove('up')
+        if 'up' not in instadeath:
+            instadeath.append('up')
     if head['y'] == height-1:
         if 'down' in directions:
             directions.remove('down')
+        if 'down' not in instadeath:
+            instadeath.append('down')
 
 
 def avoidheadtohead(head, mylength, snakes):
