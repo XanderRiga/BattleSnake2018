@@ -435,7 +435,7 @@ def diagonaldanger(me, snakes):
                 print('There is danger diagonally')
                 return True
 
-    for point in me[:-2]:
+    for point in me[:-1]:
         if isdiagonal(head, point):
             print('There is danger diagonally')
             return True
