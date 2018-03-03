@@ -5,6 +5,8 @@ import copy
 import math
 
 directions = ['up', 'down', 'left', 'right']
+instadeath = []
+danger = {}
 
 
 @bottle.route('/')
@@ -42,6 +44,9 @@ def start():
 @bottle.post('/move')
 def move():
     global directions
+    global danger
+    global instadeath
+
     directions = ['up', 'down', 'left', 'right']
     taunt = 'Bears, Beets, Battlestar Galactica'
     data = bottle.request.json
@@ -97,17 +102,25 @@ def move():
         # print(upsize)
         # print(downsize)
         if leftlist and leftsize < len(me) + 2 and 'left' in directions:
+            if 'left' not in danger.keys() or ('left' in danger.keys() and danger['left'] < leftsize):
+                danger['left'] = leftsize
             directions.remove('left')
-            print('removing left, size: ' + str(leftsize))
+            # print('removing left, size: ' + str(leftsize))
         if rightlist and rightsize < len(me) + 2 and 'right' in directions:
+            if 'right' not in danger.keys() or ('right' in danger.keys() and danger['right'] < rightsize):
+                danger['right'] = rightsize
             directions.remove('right')
-            print('removing right, size: ' + str(rightsize))
+            # print('removing right, size: ' + str(rightsize))
         if uplist and upsize < len(me) + 2 and 'up' in directions:
+            if 'up' not in danger.keys() or ('up' in danger.keys() and danger['up'] < upsize):
+                danger['up'] = upsize
             directions.remove('up')
-            print('removing up, size: ' + str(upsize))
+            # print('removing up, size: ' + str(upsize))
         if downlist and downsize < len(me) + 2 and 'down' in directions:
+            if 'down' not in danger.keys() or ('down' in danger.keys() and danger['down'] < downsize):
+                danger['down'] = downsize
             directions.remove('down')
-            print('removing down, size: ' + str(downsize))
+            # print('removing down, size: ' + str(downsize))
 
     fooddir = []
     if myhealth < 50:
@@ -122,10 +135,25 @@ def move():
                     direction = x
                     break
     else:
-        print('Goodbye cruel world')
         taunt = 'MICHAEL!!!!!!'
         direction = 'up'
+        safest = 0
+        # print('We are in danger, here is the direction dict:')
+        # print(directions)
+        # print('We are in danger, here is the danger dict:')
+        # print(danger)
+        for key, value in danger.items():
+            if value > safest and key not in instadeath:
+                safest = value
+                direction = key
 
+    # print('Legal Moves')
+    # print(directions)
+    # print('Danger Moves')
+    # print(danger)
+    # print('Insta Death')
+    # print(instadeath)
+    instadeath = []
     return {
         'move': direction,
         'taunt': taunt
@@ -259,46 +287,64 @@ def buildboard(me, snakes, width, height):
 def donthitsnakes(head, snakes):
     """goes through entire snake array and stops it from directly hitting any snakes"""
     global directions
+    global instadeath
 
     for snake in snakes['data']:
         for bodypart in snake['body']['data']:
             adj = findadjacentdir(head, bodypart)
             if adj and adj in directions:
                 directions.remove(adj)
+            if adj and adj not in instadeath:
+                instadeath.append(adj)
 
 
 def donthittail(me):
     """Stops the snake from hitting it's own tail(anything past its head and neck)"""
     global directions
+    global instadeath
+
     head = me[0]
 
     for x in me[:-1]: # it is ok to move where the last point in our tail is
         adj = findadjacentdir(head, x)
         if adj and adj in directions:
             directions.remove(adj)
+        if adj and adj not in instadeath:
+            instadeath.append(adj)
 
 
 def donthitwalls(me, width, height):
     """Stops the snake from hitting any walls"""
     global directions
+    global instadeath
+
     head = me[0]
 
     if head['x'] == 0:
         if 'left' in directions:
             directions.remove('left')
+        if 'left' not in instadeath:
+            instadeath.append('left')
     if head['x'] == width-1:
         if 'right' in directions:
             directions.remove('right')
+        if 'right' not in instadeath:
+            instadeath.append('right')
     if head['y'] == 0:
         if 'up' in directions:
             directions.remove('up')
+        if 'up' not in instadeath:
+            instadeath.append('up')
     if head['y'] == height-1:
         if 'down' in directions:
             directions.remove('down')
+        if 'down' not in instadeath:
+            instadeath.append('down')
 
 
 def avoidheadtohead(head, mylength, snakes):
     global directions
+    global danger
     myadj = getadjpoints(head)
 
     othersnakeadj = []
@@ -312,8 +358,11 @@ def avoidheadtohead(head, mylength, snakes):
         for y in othersnakeadj:
             if x == y:
                 dir = findadjacentdir(head, x)
+                if dir not in danger:
+                    # print('adding ' + str(dir) + 'to danger array with value ' + str(mylength+1))
+                    danger[dir] = mylength+1
                 if dir and dir in directions:
-                    print('head to head, removing ' + dir)
+                    # print('head to head, removing ' + dir)
                     directions.remove(dir)
 
 
