@@ -18,6 +18,8 @@ quotes = [
     'Through concentration, I can raise and lower my cholesterol at will'
 ]
 
+taunt = 'Bears, Beets, Battlestar Galactica'
+
 @bottle.route('/')
 def static():
     return "the server is running"
@@ -56,6 +58,7 @@ def move():
     global danger
     global instadeath
     global quotes
+    global taunt
 
     directions = ['up', 'down', 'left', 'right']
     data = bottle.request.json
@@ -163,15 +166,10 @@ def move():
                 direction = key
 
     instadeath = []
-    if taunt:
-        return {
-            'move': direction,
-            'taunt': taunt
-        }
-    else:
-        return {
-            'move': direction
-        }
+    return {
+        'move': direction,
+        'taunt': taunt
+    }
 
 
 #
