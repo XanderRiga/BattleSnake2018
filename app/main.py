@@ -166,6 +166,18 @@ def move():
                 safest = value
                 direction = key
 
+    if directions and danger:
+        currsafest = 0
+        currdirection = None
+        for key, value in danger.items():
+            if value > currsafest and key not in instadeath:
+                currsafest = value
+                currdirection = key
+
+        if currdirection:
+            direction = currdirection
+
+
     return {
         'move': direction,
         'taunt': taunt
