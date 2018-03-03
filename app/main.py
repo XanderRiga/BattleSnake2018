@@ -94,6 +94,8 @@ def move():
         uplist = []
         downlist = []
         leftsize = rightsize = upsize = downsize = 0
+        print('directions')
+        print(directions)
         for dir in directions:
             # print('headx: ' + str(headx) + ' heady: ' + str(heady))
             if dir == 'left':
