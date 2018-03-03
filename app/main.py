@@ -152,7 +152,7 @@ def move():
     print('Danger Moves')
     print(danger)
     print('Insta Death')
-    print(isntadeath)
+    print(instadeath)
     return {
         'move': direction,
         'taunt': taunt
