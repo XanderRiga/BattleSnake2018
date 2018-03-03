@@ -430,10 +430,12 @@ def diagonaldanger(me, snakes):
     for snake in snakes['data']:
         for bodypart in snake['body']['data']:
             if isdiagonal(head, bodypart):
+                print('There is danger diagonally')
                 return True
 
     for point in me[:-1]:
         if isdiagonal(head, point):
+            print('There is danger diagonally')
             return True
 
     return False
