@@ -127,6 +127,7 @@ def move():
         if leftlist:
             if 'left' not in danger.keys() or ('left' in danger.keys() and danger['left'] < leftsize):
                 danger['left'] = leftsize
+
         if rightlist and rightsize < len(me) + 2 and 'right' in directions:
             if 'right' not in danger.keys() or ('right' in danger.keys() and danger['right'] < rightsize):
                 danger['right'] = rightsize
@@ -135,6 +136,7 @@ def move():
         if rightlist:
             if 'right' not in danger.keys() or ('right' in danger.keys() and danger['right'] < rightsize):
                 danger['right'] = rightsize
+
         if uplist and upsize < len(me) + 2 and 'up' in directions:
             if 'up' not in danger.keys() or ('up' in danger.keys() and danger['up'] < upsize):
                 danger['up'] = upsize
@@ -143,6 +145,7 @@ def move():
         if uplist:
             if 'up' not in danger.keys() or ('up' in danger.keys() and danger['up'] < upsize):
                 danger['up'] = upsize
+
         if downlist and downsize < len(me) + 2 and 'down' in directions:
             if 'down' not in danger.keys() or ('down' in danger.keys() and danger['down'] < downsize):
                 danger['down'] = downsize
@@ -161,7 +164,17 @@ def move():
         fooddir = dirtopoint(me, closestfood)
 
     taunt = 'D.W.I.G.H.T - Determined, Worker, Intense, Good worker, Hard worker, Terrific'
-    if directions:
+    if directions and danger:
+        currsafest = 0
+        currdirection = None
+        for key, value in danger.items():
+            if value > currsafest and key not in instadeath:
+                currsafest = value
+                currdirection = key
+
+        if currdirection:
+            direction = currdirection
+    elif directions:
         direction = random.choice(directions)
         if fooddir:
             for x in fooddir:
