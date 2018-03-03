@@ -138,6 +138,7 @@ def move():
             # print('removing down, size: ' + str(downsize))
 
     print(danger)
+    print(instadeath)
     fooddir = []
     if myhealth < 80:
         closestfood = findclosestfood(me, food)
