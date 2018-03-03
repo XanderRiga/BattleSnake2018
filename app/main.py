@@ -135,6 +135,8 @@ def move():
         taunt = 'MICHAEL!!!!!!'
         direction = 'up'
         safest = 0
+        print('We are in danger, here is the direction dict:')
+        print(directions)
         print('We are in danger, here is the danger dict:')
         print(danger)
         for key, value in danger.items():
@@ -142,6 +144,10 @@ def move():
                 safest = value
                 direction = key
 
+    print('Legal Moves')
+    print(directions)
+    print('Danger Moves')
+    print(danger)
     return {
         'move': direction,
         'taunt': taunt
@@ -330,6 +336,7 @@ def avoidheadtohead(head, mylength, snakes):
             if x == y:
                 dir = findadjacentdir(head, x)
                 if dir not in danger:
+                    print('adding ' + dir + 'to danger array with value ' + mylength+1)
                     danger[dir] = mylength+1
                 if dir and dir in directions:
                     print('head to head, removing ' + dir)
