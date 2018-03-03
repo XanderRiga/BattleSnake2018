@@ -9,15 +9,15 @@ instadeath = []
 danger = {}
 
 quotes = [
-    'R is the most menacing sound in the English language. That\'s why it\'s called murder and not mukduk',
+    # 'R is the most menacing sound in the English language. That\'s why it\'s called murder and not mukduk',
     'The eyes are the groin of the head',
-    'In an ideal world I would have all ten fingers on my left hand and the right one would just be left for punching',
+    # 'In an ideal world I would have all ten fingers on my left hand and the right one would just be left for punching',
     'Bears, Beets, Battlestar Galactica',
-    'I am fast. To give you a reference point I am somewhere between a snake and a mongoose... And a panther',
+    'I am fast. I am somewhere between a snake and a mongoose... And a panther',
     'D.W.I.G.H.T - Determined, Worker, Intense, Good worker, Hard worker, Terrific',
     'Through concentration, I can raise and lower my cholesterol at will'
 ]
-
+taunt = 'Bears, Beets, Battlestar Galactica'
 
 @bottle.route('/')
 def static():
@@ -31,6 +31,7 @@ def static(path):
 
 @bottle.post('/start')
 def start():
+    global taunt
     data = bottle.request.json
     game_id = data.get('game_id')
     board_width = data.get('width')
@@ -45,7 +46,7 @@ def start():
         'color': '#ffcc00',
         'head_url': head_url,
         'name': 'Dwight Snake',
-        'taunt': 'Bears, Beets, Battlestar Galactica',
+        'taunt': taunt,
         'head_type': 'safe',
         'tail_type': 'round-bum'
     }
@@ -57,9 +58,9 @@ def move():
     global danger
     global instadeath
     global quotes
+    global taunt
 
     directions = ['up', 'down', 'left', 'right']
-    taunt = 'Bears, Beets, Battlestar Galactica'
     data = bottle.request.json
 
     snakes = data['snakes']
