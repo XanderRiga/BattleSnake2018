@@ -153,6 +153,7 @@ def move():
     print(danger)
     print('Insta Death')
     print(instadeath)
+    instadeath = []
     return {
         'move': direction,
         'taunt': taunt
