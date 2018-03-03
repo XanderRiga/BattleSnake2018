@@ -9,7 +9,7 @@ instadeath = []
 danger = {}
 
 quotes = [
-    'R is the most menacing sound in the English language. That\'s why it’s called murder and not mukduk',
+    'R is the most menacing sound in the English language. That\'s why it\'s called murder and not mukduk',
     'The eyes are the groin of the head',
     'In an ideal world I would have all ten fingers on my left hand and the right one would just be left for punching',
     'Bears, Beets, Battlestar Galactica',
