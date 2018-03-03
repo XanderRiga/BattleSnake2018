@@ -140,9 +140,10 @@ def move():
         fooddir = dirtopoint(me, closestfood)
 
     turn = data['turn']
-    print('turn #' + str(turn))
     if turn % 15 == 0:
         taunt = random.choice(quotes)
+        print('updated to taunt:')
+        print(taunt)
 
     if directions:
         direction = random.choice(directions)
