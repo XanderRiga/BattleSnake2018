@@ -122,21 +122,34 @@ def move():
                 danger['left'] = leftsize
             directions.remove('left')
             # print('removing left, size: ' + str(leftsize))
+        if leftlist:
+            if 'left' not in danger.keys() or ('left' in danger.keys() and danger['left'] < leftsize):
+                danger['left'] = leftsize
         if rightlist and rightsize < len(me) + 2 and 'right' in directions:
             if 'right' not in danger.keys() or ('right' in danger.keys() and danger['right'] < rightsize):
                 danger['right'] = rightsize
             directions.remove('right')
             # print('removing right, size: ' + str(rightsize))
+        if rightlist:
+            if 'right' not in danger.keys() or ('right' in danger.keys() and danger['right'] < rightsize):
+                danger['right'] = rightsize
         if uplist and upsize < len(me) + 2 and 'up' in directions:
             if 'up' not in danger.keys() or ('up' in danger.keys() and danger['up'] < upsize):
                 danger['up'] = upsize
             directions.remove('up')
             # print('removing up, size: ' + str(upsize))
+        if uplist:
+            if 'up' not in danger.keys() or ('up' in danger.keys() and danger['up'] < upsize):
+                danger['up'] = upsize
         if downlist and downsize < len(me) + 2 and 'down' in directions:
             if 'down' not in danger.keys() or ('down' in danger.keys() and danger['down'] < downsize):
                 danger['down'] = downsize
             directions.remove('down')
             # print('removing down, size: ' + str(downsize))
+        if downlist:
+            if 'down' not in danger.keys() or ('down' in danger.keys() and danger['down'] < downsize):
+                danger['down'] = downsize
+
 
     print(danger)
     print(instadeath)
