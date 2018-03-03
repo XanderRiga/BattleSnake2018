@@ -293,7 +293,7 @@ def donthitsnakes(head, snakes):
             adj = findadjacentdir(head, bodypart)
             if adj and adj in directions:
                 directions.remove(adj)
-            if adj not in instadeath:
+            if adj and adj not in instadeath:
                 instadeath.append(adj)
 
 
@@ -308,7 +308,7 @@ def donthittail(me):
         adj = findadjacentdir(head, x)
         if adj and adj in directions:
             directions.remove(adj)
-        if adj not in instadeath:
+        if adj and adj not in instadeath:
             instadeath.append(adj)
 
 
