@@ -135,7 +135,7 @@ def move():
             # print('removing down, size: ' + str(downsize))
 
     fooddir = []
-    if myhealth < 50:
+    if myhealth < 80:
         closestfood = findclosestfood(me, food)
         fooddir = dirtopoint(me, closestfood)
 
