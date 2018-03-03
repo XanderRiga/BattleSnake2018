@@ -146,7 +146,17 @@ def move():
         fooddir = dirtopoint(me, closestfood)
 
     taunt = 'D.W.I.G.H.T - Determined, Worker, Intense, Good worker, Hard worker, Terrific'
-    if directions:
+    if directions and danger:
+        currsafest = 0
+        currdirection = None
+        for key, value in danger.items():
+            if value > currsafest and key not in instadeath:
+                currsafest = value
+                currdirection = key
+
+        if currdirection:
+            direction = currdirection
+    elif directions and not danger:
         direction = random.choice(directions)
         if fooddir:
             for x in fooddir:
@@ -167,15 +177,7 @@ def move():
                 direction = key
 
     if directions and danger:
-        currsafest = 0
-        currdirection = None
-        for key, value in danger.items():
-            if value > currsafest and key not in instadeath:
-                currsafest = value
-                currdirection = key
 
-        if currdirection:
-            direction = currdirection
 
 
     return {
