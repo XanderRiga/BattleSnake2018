@@ -1,6 +1,6 @@
 # battlesnake-python
 
-At Battlesnake 2018 this snake beat: both snakes from Rooof, 2/3 from Bambora, and both snakes from Semaphore.
+# At Battlesnake 2018 this snake beat: both snakes from Rooof, 2/3 from Bambora, and both snakes from Semaphore.
 
 A simple [BattleSnake AI](http://battlesnake.io) written in Python. 
 
