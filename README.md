@@ -1,4 +1,4 @@
-# battlesnake-python
+# Dwight Snake
 
 # At Battlesnake 2018 this snake beat: both snakes from Rooof, 2/3 from Bambora, and both snakes from Semaphore.
 
